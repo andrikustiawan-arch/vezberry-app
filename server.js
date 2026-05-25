@@ -1,11 +1,5 @@
-app.listen(
-    PORT,
-    '0.0.0.0',
-    () => {
+const PORT = process.env.PORT || 3001;
 
-        console.log(
-            `✅ Vezberry API Server berjalan di port ${PORT}`
-        );
-
-    }
-);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ API berjalan di port ${PORT}`);
+});
