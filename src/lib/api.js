@@ -1,4 +1,4 @@
-const BASE = 'http://192.168.18.167:3001/api';
+const BASE = 'https://vezberry-app-production.up.railway.app/api';
 
 // ========================================
 // REQUEST HELPER

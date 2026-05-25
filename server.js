@@ -20,7 +20,7 @@ const __dirname =
 
 const app = express();
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // ========================================
 // MIDDLEWARE
@@ -194,7 +194,7 @@ app.post(
         res.json({
 
             url:
-                `http://192.168.18.167:3001/uploads/${req.file.filename}`
+                `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
 
         });
 
@@ -485,11 +485,11 @@ app.listen(
     () => {
 
         console.log(
-            `\n✅  Vezberry API Server berjalan di http://localhost:${PORT}`
+            `\n✅ Vezberry API Server berjalan di https://vezberry-app-production.up.railway.app`
         );
 
         console.log(
-            `📱  Akses HP gunakan: http://192.168.18.167:${PORT}\n`
+            `📱 Akses HP gunakan: http://192.168.18.167:${PORT}\n`
         );
 
     }
