@@ -267,14 +267,38 @@ export default function ImageUploader({
                 // UPLOAD KE SERVER
                 // =========================
 
-                const { url } =
+                const result =
                     await api.upload(
                         compressed
                     );
 
-                setPreview(url);
+                console.log(
+                    'UPLOAD RESULT:',
+                    result
+                );
 
-                onChange(url);
+                const imageUrl =
+                    result.imageUrl;
+
+                if (!imageUrl) {
+
+                    throw new Error(
+                        'imageUrl tidak ditemukan dari backend'
+                    );
+
+                }
+
+                // kalau backend return relative path
+                const finalUrl =
+                    imageUrl.startsWith('http')
+
+                        ? imageUrl
+
+                        : `https://vezberry-api-production.up.railway.app${imageUrl}`;
+
+                setPreview(finalUrl);
+
+                onChange(finalUrl);
 
                 toast.success(
                     "Gambar berhasil diupload"
