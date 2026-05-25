@@ -27,6 +27,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const productsFile = path.join(__dirname, 'data', 'products.json');
 const ordersFile = path.join(__dirname, 'data', 'orders.json');
+const settingsFile = path.join(__dirname, 'data', 'settings.json');
 const uploadsDir = path.join(__dirname, 'uploads');
 
 if (!fs.existsSync(uploadsDir)) {
@@ -80,6 +81,58 @@ app.get('/api/orders', (req, res) => {
         res.status(500).json({
             error: 'Gagal membaca orders',
         });
+    }
+});
+
+// GET SETTINGS
+app.get('/api/settings', (req, res) => {
+    try {
+
+        if (!fs.existsSync(settingsFile)) {
+
+            fs.writeFileSync(
+                settingsFile,
+                JSON.stringify({}, null, 2)
+            );
+
+        }
+
+        const data = fs.readFileSync(settingsFile, 'utf8');
+
+        res.json(JSON.parse(data));
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            error: 'Gagal membaca settings',
+        });
+
+    }
+});
+
+// SAVE SETTINGS
+app.put('/api/settings', (req, res) => {
+    try {
+
+        fs.writeFileSync(
+            settingsFile,
+            JSON.stringify(req.body, null, 2)
+        );
+
+        res.json({
+            success: true,
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            error: 'Gagal menyimpan settings',
+        });
+
     }
 });
 
