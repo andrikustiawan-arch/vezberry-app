@@ -27,14 +27,18 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const productsFile = path.join(__dirname, 'data', 'products.json');
 const ordersFile = path.join(__dirname, 'data', 'orders.json');
+const uploadsDir = path.join(__dirname, 'uploads');
 
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
 // =========================
 // MULTER
 // =========================
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, 'uploads'));
+        cb(null, uploadsDir);
     },
     filename: (req, file, cb) => {
         const uniqueName = Date.now() + '-' + file.originalname;
