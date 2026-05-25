@@ -1,4 +1,4 @@
-const BASE = 'https://vezberry-app-production.up.railway.app/api';
+const BASE = 'https://vezberry-api-production.up.railway.app/api';
 
 // ========================================
 // REQUEST HELPER
