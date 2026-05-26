@@ -1,13 +1,19 @@
 import express from 'express';
 import cors from 'cors';
-
+import fs from 'fs';
+import path from 'path';
 import multer from 'multer';
-
+import { fileURLToPath } from 'url';
 
 // =========================
 // __DIRNAME
 // =========================
 
+const __filename =
+    fileURLToPath(import.meta.url);
+
+const __dirname =
+    path.dirname(__filename);
 
 // =========================
 // APP
@@ -25,7 +31,14 @@ const PORT =
 
 app.use(cors({
 
-    origin: '*',
+    origin: [
+
+        'https://www.vezberry.com',
+        'https://vezberry.com',
+        'http://localhost:5173',
+        'http://localhost:3001',
+
+    ],
 
     methods: [
         'GET',
@@ -34,15 +47,14 @@ app.use(cors({
         'DELETE',
     ],
 
+    credentials: true,
+
 }));
 
-app.use(express.json({
-    limit: '50mb',
-}));
+app.use(express.json());
 
 app.use(express.urlencoded({
     extended: true,
-    limit: '50mb',
 }));
 
 // =========================
@@ -59,22 +71,13 @@ const distPath =
     path.join(__dirname, 'dist');
 
 const productsFile =
-    path.join(
-        dataDir,
-        'products.json'
-    );
+    path.join(dataDir, 'products.json');
 
 const ordersFile =
-    path.join(
-        dataDir,
-        'orders.json'
-    );
+    path.join(dataDir, 'orders.json');
 
 const settingsFile =
-    path.join(
-        dataDir,
-        'settings.json'
-    );
+    path.join(dataDir, 'settings.json');
 
 // =========================
 // CREATE FOLDERS
@@ -164,12 +167,11 @@ const storage =
             cb
         ) => {
 
-            const safeName =
+            const uniqueName =
+                Date.now() +
+                '-' +
                 file.originalname
                     .replace(/\s+/g, '-');
-
-            const uniqueName =
-                `${Date.now()}-${safeName}`;
 
             cb(
                 null,
@@ -227,10 +229,9 @@ app.get('/api/products', (req, res) => {
                 'utf8'
             );
 
-        const products =
-            JSON.parse(data);
-
-        res.json(products);
+        res.json(
+            JSON.parse(data)
+        );
 
     } catch (error) {
 
@@ -276,7 +277,7 @@ app.post('/api/products', (req, res) => {
 
         };
 
-        products.unshift(
+        products.push(
             newProduct
         );
 
@@ -476,10 +477,9 @@ app.get('/api/orders', (req, res) => {
                 'utf8'
             );
 
-        const orders =
-            JSON.parse(data);
-
-        res.json(orders);
+        res.json(
+            JSON.parse(data)
+        );
 
     } catch (error) {
 
@@ -510,10 +510,9 @@ app.get('/api/settings', (req, res) => {
                 'utf8'
             );
 
-        const settings =
-            JSON.parse(data);
-
-        res.json(settings);
+        res.json(
+            JSON.parse(data)
+        );
 
     } catch (error) {
 
@@ -529,8 +528,6 @@ app.get('/api/settings', (req, res) => {
     }
 
 });
-
-// SAVE SETTINGS
 
 app.put('/api/settings', (req, res) => {
 
@@ -593,26 +590,9 @@ app.post(
 
             }
 
-            // =========================
-            // FIX HTTPS URL
-            // =========================
-
-            const baseUrl =
-
-                process.env
-                    .RAILWAY_STATIC_URL
-
-                    ? `https://${process.env.RAILWAY_STATIC_URL}`
-
-                    : `${req.protocol}://${req.get('host')}`;
-
             const imageUrl =
-                `${baseUrl}/uploads/${req.file.filename}`;
 
-            console.log(
-                'UPLOAD SUCCESS:',
-                imageUrl
-            );
+                `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
 
             res.json({
 
@@ -678,5 +658,3 @@ app.listen(
 
     }
 );
-
-export default ImageUploader;

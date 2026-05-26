@@ -112,42 +112,63 @@ export default function Products() {
 
         try {
 
+            // =========================
+            // EDIT
+            // =========================
+
             if (selectedProduct) {
 
-                // EDIT
-                const updated = await api.products.update(
+                await api.products.update(
                     selectedProduct.id,
                     productData
                 );
 
-                setProducts(prev =>
-                    prev.map(p =>
-                        p.id === selectedProduct.id
-                            ? updated
-                            : p
-                    )
-                );
-
             } else {
 
+                // =========================
                 // ADD
-                const created = await api.products.create(productData);
+                // =========================
 
-                setProducts(prev => [created, ...prev]);
+                await api.products.create(
+                    productData
+                );
 
             }
 
+            // =========================
+            // RELOAD PRODUCTS
+            // =========================
+
+            const latestProducts =
+                await api.products.list();
+
+            setProducts(
+                Array.isArray(latestProducts)
+                    ? latestProducts
+                    : []
+            );
+
+            // =========================
+            // CLOSE MODAL
+            // =========================
+
+            setOpenModal(false);
+
+            setSelectedProduct(null);
+
         } catch (err) {
 
-            console.error("Gagal simpan produk:", err);
+            console.error(
+                "Gagal simpan produk:",
+                err
+            );
 
         }
 
-        setOpenModal(false);
-
-        setSelectedProduct(null);
-
     };
+
+
+
 
     // ========================================
     // DELETE PRODUCT

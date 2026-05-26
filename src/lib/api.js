@@ -1,4 +1,5 @@
-const BASE = 'https://vezberry-api-production.up.railway.app/api';
+const BASE =
+    'https://vezberry-api-production.up.railway.app/api';
 
 // ========================================
 // REQUEST HELPER
@@ -11,9 +12,16 @@ async function req(
     isFormData = false
 ) {
 
+    const url =
+        `${BASE}${urlPath}`;
+
     const opts = {
         method,
     };
+
+    // ========================================
+    // BODY
+    // ========================================
 
     if (data) {
 
@@ -24,7 +32,8 @@ async function req(
         } else {
 
             opts.headers = {
-                'Content-Type': 'application/json',
+                'Content-Type':
+                    'application/json',
             };
 
             opts.body =
@@ -34,28 +43,79 @@ async function req(
 
     }
 
-    const res = await fetch(
-        `${BASE}${urlPath}`,
+    // ========================================
+    // DEBUG
+    // ========================================
+
+    console.log(
+        'API REQUEST:',
+        method,
+        url
+    );
+
+    console.log(
+        'API OPTIONS:',
         opts
     );
 
-    // ERROR HANDLER
+    try {
 
-    if (!res.ok) {
+        const res =
+            await fetch(
+                url,
+                opts
+            );
 
-        const text =
-            await res.text()
-                .catch(() => '');
-
-        throw new Error(
-            `API ${method} ${urlPath} gagal (${res.status}): ${text}`
+        console.log(
+            'API STATUS:',
+            res.status
         );
 
+        // ========================================
+        // ERROR HANDLER
+        // ========================================
+
+        if (!res.ok) {
+
+            const text =
+                await res.text()
+                    .catch(() => '');
+
+            console.error(
+                'API ERROR:',
+                text
+            );
+
+            throw new Error(
+                `API ${method} ${urlPath} gagal (${res.status}): ${text}`
+            );
+
+        }
+
+        // ========================================
+        // RESPONSE JSON
+        // ========================================
+
+        const json =
+            await res.json();
+
+        console.log(
+            'API RESPONSE:',
+            json
+        );
+
+        return json;
+
+    } catch (err) {
+
+        console.error(
+            'FETCH ERROR:',
+            err
+        );
+
+        throw err;
+
     }
-
-    // RETURN JSON
-
-    return res.json();
 
 }
 
@@ -72,19 +132,37 @@ export const api = {
     products: {
 
         list: () =>
-            req('GET', '/products'),
+            req(
+                'GET',
+                '/products'
+            ),
 
         create: (data) =>
-            req('POST', '/products', data),
+            req(
+                'POST',
+                '/products',
+                data
+            ),
 
         update: (id, data) =>
-            req('PUT', `/products/${id}`, data),
+            req(
+                'PUT',
+                `/products/${id}`,
+                data
+            ),
 
         bulkUpdate: (data) =>
-            req('PUT', '/products/bulk', data),
+            req(
+                'PUT',
+                '/products/bulk',
+                data
+            ),
 
         delete: (id) =>
-            req('DELETE', `/products/${id}`),
+            req(
+                'DELETE',
+                `/products/${id}`
+            ),
 
     },
 
@@ -95,10 +173,17 @@ export const api = {
     settings: {
 
         get: () =>
-            req('GET', '/settings'),
+            req(
+                'GET',
+                '/settings'
+            ),
 
         save: (data) =>
-            req('PUT', '/settings', data),
+            req(
+                'PUT',
+                '/settings',
+                data
+            ),
 
     },
 
@@ -109,16 +194,30 @@ export const api = {
     orders: {
 
         list: () =>
-            req('GET', '/orders'),
+            req(
+                'GET',
+                '/orders'
+            ),
 
         create: (data) =>
-            req('POST', '/orders', data),
+            req(
+                'POST',
+                '/orders',
+                data
+            ),
 
         update: (id, data) =>
-            req('PUT', `/orders/${id}`, data),
+            req(
+                'PUT',
+                `/orders/${id}`,
+                data
+            ),
 
         delete: (id) =>
-            req('DELETE', `/orders/${id}`),
+            req(
+                'DELETE',
+                `/orders/${id}`
+            ),
 
     },
 
@@ -128,12 +227,36 @@ export const api = {
 
     upload: async (file) => {
 
+        console.log(
+            'UPLOAD FILE:',
+            file
+        );
+
+        // VALIDASI
+        if (
+            !file ||
+            !(
+                file instanceof File ||
+                file instanceof Blob
+            )
+        ) {
+
+            throw new Error(
+                'File upload tidak valid'
+            );
+
+        }
+
         const form =
             new FormData();
 
         form.append(
             'image',
             file
+        );
+
+        console.log(
+            'FORM DATA READY'
         );
 
         return req(

@@ -808,16 +808,17 @@ export default function ProductFormModal({
                                                 const reader =
                                                     new FileReader();
 
-                                                reader.onloadend =
-                                                    () => {
+reader.onloadend = () => {
 
-                                                        setForm((f) => ({
-                                                            ...f,
-                                                            image_url:
-                                                                reader.result,
-                                                        }));
+    const base64 =
+        String(reader.result || '');
 
-                                                    };
+    setForm((f) => ({
+        ...f,
+        image_url: base64,
+    }));
+
+};
 
                                                 reader.readAsDataURL(
                                                     resized
@@ -1811,10 +1812,22 @@ export default function ProductFormModal({
     }}
 
     src={
-        form.image_url
+        typeof form.image_url === 'string'
+            ? form.image_url
+            : ''
     }
 
     alt="preview"
+
+    onError={(e) => {
+        console.log(
+            'IMAGE ERROR:',
+            form.image_url
+        );
+
+        e.currentTarget.style.display =
+            'none';
+    }}
 
     className="
         w-full

@@ -7,10 +7,16 @@ export const resizeImage = (
 
   return new Promise((resolve, reject) => {
 
+    // =========================
     // VALIDASI FILE
+    // =========================
+
     if (
-      !(file instanceof File) &&
-      !(file instanceof Blob)
+      !file ||
+      !(
+        file instanceof File ||
+        file instanceof Blob
+      )
     ) {
 
       console.error(
@@ -19,135 +25,205 @@ export const resizeImage = (
       );
 
       reject(
-        new Error('Invalid file')
+        new Error(
+          'Invalid file'
+        )
       );
 
       return;
+
     }
+
+    // =========================
+    // CREATE OBJECT URL
+    // =========================
+
+    let objectUrl = '';
+
+    try {
+
+      objectUrl =
+        URL.createObjectURL(file);
+
+    } catch (err) {
+
+      console.error(
+        'Gagal createObjectURL:',
+        err
+      );
+
+      reject(err);
+
+      return;
+
+    }
+
+    // =========================
+    // IMAGE
+    // =========================
 
     const img =
       new Image();
 
-    const canvas =
-      document.createElement('canvas');
-
-    const ctx =
-      canvas.getContext('2d');
-
-    export function safePreview(value) {
-
-      if (!value)
-        return '';
-
-      if (
-        value instanceof File ||
-        value instanceof Blob
-      ) {
-
-        return safePreview(value);
-
-      }
-
-      if (typeof value === 'string') {
-
-        return value;
-
-      }
-
-      return '';
-
-    }
-
     img.onload = () => {
 
-      let width =
-        img.width;
+      try {
 
-      let height =
-        img.height;
+        let width =
+          img.width;
 
-      // RESIZE
-      if (width > height) {
+        let height =
+          img.height;
 
-        if (width > maxWidth) {
+        // =========================
+        // RESIZE CALCULATION
+        // =========================
 
-          height *=
-            maxWidth / width;
+        if (width > height) {
 
-          width =
-            maxWidth;
+          if (width > maxWidth) {
+
+            height =
+              Math.round(
+                height *
+                (
+                  maxWidth / width
+                )
+              );
+
+            width =
+              maxWidth;
+
+          }
+
+        } else {
+
+          if (height > maxHeight) {
+
+            width =
+              Math.round(
+                width *
+                (
+                  maxHeight / height
+                )
+              );
+
+            height =
+              maxHeight;
+
+          }
 
         }
 
-      } else {
+        // =========================
+        // CANVAS
+        // =========================
 
-        if (height > maxHeight) {
+        const canvas =
+          document.createElement(
+            'canvas'
+          );
 
-          width *=
-            maxHeight / height;
+        canvas.width =
+          width;
 
-          height =
-            maxHeight;
+        canvas.height =
+          height;
 
-        }
+        const ctx =
+          canvas.getContext('2d');
 
-      }
+        if (!ctx) {
 
-      canvas.width =
-        width;
-
-      canvas.height =
-        height;
-
-      ctx.drawImage(
-        img,
-        0,
-        0,
-        width,
-        height
-      );
-
-      canvas.toBlob(
-
-        (blob) => {
-
-          // RELEASE MEMORY
           URL.revokeObjectURL(
             objectUrl
           );
 
-          if (!blob) {
-
-            console.error(
-              'Resize gagal: blob null'
-            );
-
-            resolve(file);
-
-            return;
-
-          }
-
-          const resizedFile =
-            new File(
-              [blob],
-              file.name,
-              {
-                type: 'image/jpeg',
-              }
-            );
-
-          resolve(
-            resizedFile
+          reject(
+            new Error(
+              'Canvas context gagal'
+            )
           );
 
-        },
+          return;
 
-        'image/jpeg',
-        quality
-      );
+        }
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          width,
+          height
+        );
+
+        // =========================
+        // CONVERT TO BLOB
+        // =========================
+
+        canvas.toBlob(
+
+          (blob) => {
+
+            URL.revokeObjectURL(
+              objectUrl
+            );
+
+            if (!blob) {
+
+              reject(
+                new Error(
+                  'Resize gagal'
+                )
+              );
+
+              return;
+
+            }
+
+            const resizedFile =
+              new File(
+                [blob],
+
+                file.name
+                  ? file.name.replace(
+                    /\.\w+$/,
+                    '.jpg'
+                  )
+                  : `image-${Date.now()}.jpg`,
+
+                {
+                  type:
+                    'image/jpeg',
+                }
+              );
+
+            resolve(
+              resizedFile
+            );
+
+          },
+
+          'image/jpeg',
+          quality
+
+        );
+
+      } catch (err) {
+
+        URL.revokeObjectURL(
+          objectUrl
+        );
+
+        reject(err);
+
+      }
 
     };
+
+    // =========================
+    // ERROR LOAD IMAGE
+    // =========================
 
     img.onerror = (err) => {
 
@@ -156,16 +232,92 @@ export const resizeImage = (
       );
 
       console.error(
-        'Gagal load image',
+        'Gagal load image:',
         err
       );
 
-      reject(err);
+      reject(
+        new Error(
+          'Gagal membaca gambar'
+        )
+      );
 
     };
 
-    img.src = objectUrl;
+    // =========================
+    // LOAD IMAGE
+    // =========================
+
+    img.src =
+      objectUrl;
 
   });
 
 };
+
+// =========================
+// SAFE PREVIEW
+// =========================
+
+export function safePreview(
+  value
+) {
+
+  if (!value) {
+
+    return '';
+
+  }
+
+  // =========================
+  // FILE / BLOB
+  // =========================
+
+  if (
+    value instanceof File ||
+    value instanceof Blob
+  ) {
+
+    try {
+
+      return URL.createObjectURL(
+        value
+      );
+
+    } catch (err) {
+
+      console.error(
+        'Preview gagal:',
+        err
+      );
+
+      return '';
+
+    }
+
+  }
+
+  // =========================
+  // STRING URL
+  // =========================
+
+  if (
+    typeof value === 'string'
+  ) {
+
+    return value;
+
+  }
+
+  // =========================
+  // INVALID
+  // =========================
+
+  console.warn(
+    'safePreview menerima value invalid:',
+    value
+  );
+
+  return '';
+
+}
