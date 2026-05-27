@@ -5,6 +5,17 @@ import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 // =========================
 // __DIRNAME
@@ -648,14 +659,8 @@ if (fs.existsSync(distPath)) {
 // START SERVER
 // =========================
 
-app.listen(
-    PORT,
-    '0.0.0.0',
-    () => {
+const PORT = process.env.PORT || 3000;
 
-        console.log(
-            `✅ API berjalan di port ${PORT}`
-        );
-
-    }
-);
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`);
+});
