@@ -12,6 +12,14 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 
+app.get("/", (req, res) => {
+    res.send("VEZBERRY ROOT OK");
+});
+
+app.get("/test", (req, res) => {
+    res.send("TEST OK");
+});
+
 // =========================
 // PATHS
 // =========================
