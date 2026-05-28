@@ -207,7 +207,18 @@ app.post("/api/products", (req, res) => {
             price: Number(req.body.price) || 0,
             stock: Number(req.body.stock) || 0,
             description: req.body.description || "",
+
+            image:
+                req.body.image || "",
+
             imageUrl:
+                req.body.imageUrl ||
+                req.body.image_url ||
+                req.body.image ||
+                "",
+
+            image_url:
+                req.body.image_url ||
                 req.body.imageUrl ||
                 req.body.image ||
                 "",
