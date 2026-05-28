@@ -109,11 +109,15 @@ const upload = multer({ storage });
 // HEALTH
 // =========================
 
-app.get("/api/health", (req, res) => {
-    res.status(200).json({
+app.post("/api/test", (req, res) => {
+
+    console.log("TEST POST HIT");
+
+    res.json({
         success: true,
-        message: "VEZBERRY API OK",
+        body: req.body,
     });
+
 });
 
 // =========================
