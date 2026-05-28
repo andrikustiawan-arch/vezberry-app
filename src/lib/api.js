@@ -1,5 +1,5 @@
 const BASE =
-    'https://vezberry-api-production.up.railway.app/api';
+    'https://vezberry-api-production.up.railwahttps://vezberry-app-production.up.railway.app/api';
 
 // ========================================
 // REQUEST HELPER
