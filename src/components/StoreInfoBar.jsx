@@ -156,45 +156,33 @@ export default function StoreInfoBar({
     const dateStr =
         `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
 
+    const isOpen =
+        storeStatus?.isOpen || false;
+
+    const statusText =
+        storeStatus?.statusText || "TUTUP";
+
+    const todaySchedule =
+        storeStatus?.today || null;
+
+    const openTime =
+        todaySchedule?.open || "--:--";
+
+    const closeTime =
+        todaySchedule?.close || "--:--";
+
+
     // ========================================
     // SETTINGS
     // ========================================
 
-    const openTime =
-        settings?.open_time || '08:00';
 
-    const closeTime =
-        settings?.close_time || '21:00';
-
-    const manualIsOpen =
-        settings?.is_open !== false;
 
     // ========================================
     // OPEN STATUS
     // ========================================
 
-    const currentMins =
 
-        now.getHours() * 60 +
-        now.getMinutes();
-
-    const openMins =
-        parseTime(openTime);
-
-    const closeMins =
-        parseTime(closeTime);
-
-    const autoOpen =
-
-        openMins !== null &&
-        closeMins !== null &&
-
-        currentMins >= openMins &&
-        currentMins < closeMins;
-
-    const isOpen =
-        manualIsOpen &&
-        autoOpen;
 
     // ========================================
     // PROGRESS
@@ -501,24 +489,24 @@ export default function StoreInfoBar({
 
                             transition-all
 
-${storeStatus?.statusText === "LIBUR"
+${statusText === "LIBUR"
 
                                 ? `
-        bg-yellow-100
-        text-yellow-700
-    `
+                                    bg-yellow-100
+                                    text-yellow-700
+                                `
 
                                 : isOpen
 
                                     ? `
-            bg-emerald-100
-            text-emerald-700
-        `
+                                        bg-emerald-100
+                                        text-emerald-700
+                                    `
 
                                     : `
-            bg-red-100
-            text-red-600
-        `
+                                        bg-red-100
+                                        text-red-600
+                                    `
                             }
                         `}>
 
@@ -530,29 +518,26 @@ ${storeStatus?.statusText === "LIBUR"
 
                                 rounded-full
 
-${isOpen
+                            ${statusText === "LIBUR"
 
                                     ? `
-        bg-yellow-500
-    `
+                                        bg-yellow-500
+                                    `
 
                                     : isOpen
 
                                         ? `
-            bg-emerald-500
-            animate-pulse
-        `
+                                            bg-emerald-500
+                                            animate-pulse
+                                        `
 
                                         : `
-            bg-red-500
-        `
+                                            bg-red-500
+                                        `
                                 }
                             `} />
 
-                            {isOpen
-                                ? "Buka"
-                                : "Tutup"
-                            }
+                            {statusText}
 
                         </div>
 
