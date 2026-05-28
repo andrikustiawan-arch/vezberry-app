@@ -178,19 +178,21 @@ export default function ProductCard({
             ">
 
                 <img
-
                     loading="lazy"
-
                     decoding="async"
-
                     src={
-                        product.image_url
+                        product.imageUrl ||
+                        product.image_url ||
+                        product.image ||
+                        "https://placehold.co/600x400?text=No+Image"
                     }
-
                     alt={
                         product.name
                     }
-
+                    onError={(e) => {
+                        e.target.src =
+                            "https://placehold.co/600x400?text=No+Image";
+                    }}
                     className="
                         w-full
                         h-full

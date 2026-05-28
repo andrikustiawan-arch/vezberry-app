@@ -549,7 +549,9 @@ md:pb-24
                                             <img
 
                                                 src={
-                                                    product.image_url
+                                                    product.imageUrl ||
+                                                    product.image_url ||
+                                                    product.image
                                                 }
 
                                                 alt={
