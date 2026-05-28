@@ -63,17 +63,7 @@ export function getStoreStatus(
         // SUPPORT OBJECT
         // ====================================
 
-        else if (
-            typeof settings.operational_hours ===
-            "object"
-        ) {
 
-            todaySchedule =
-                settings.operational_hours[
-                todayName.toLowerCase()
-                ];
-
-        }
 
         if (!todaySchedule) {
 

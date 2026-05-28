@@ -106,7 +106,7 @@ export default function StoreInfoBar({
 
     const days = [
 
-        'Minggu',
+        'Ahad',
 
         'Senin',
 

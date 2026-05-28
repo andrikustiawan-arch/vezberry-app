@@ -443,11 +443,9 @@ export default function StoreSettingsPage() {
 
             }, 300);
 
-            setTimeout(() => {
-
-                window.location.reload();
-
-            }, 700);
+            window.dispatchEvent(
+                new Event("vezberry-settings-updated")
+            );
 
         } catch (err) {
 
