@@ -248,7 +248,47 @@ app.post("/api/products", (req, res) => {
     }
 
 });
+// BULK UPDATE PRODUCTS
 
+app.put("/api/products/bulk", (req, res) => {
+
+    try {
+
+        console.log("BULK UPDATE PRODUCTS");
+
+        const updatedProducts = req.body;
+
+        if (!Array.isArray(updatedProducts)) {
+
+            return res.status(400).json({
+                success: false,
+                error: "Invalid products array",
+            });
+
+        }
+
+        fs.writeFileSync(
+            productsFile,
+            JSON.stringify(updatedProducts, null, 2)
+        );
+
+        return res.json({
+            success: true,
+            message: "Products updated",
+        });
+
+    } catch (err) {
+
+        console.error("BULK UPDATE ERROR:", err);
+
+        return res.status(500).json({
+            success: false,
+            error: "Failed bulk update products",
+        });
+
+    }
+
+});
 // =========================
 // ORDERS
 // =========================
