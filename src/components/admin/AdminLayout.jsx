@@ -959,55 +959,54 @@ export default function AdminLayout({
 
                             onClick={() => {
 
-                                window.open(
-                                    "https://www.vezberry.com",
-                                    "_blank"
-                                );
+                                window.location.href = "/";
 
                             }}
 
                             className="
-                                min-h-[54px]
+        w-full
 
-                                rounded-[22px]
+        min-h-[54px]
 
-                                bg-white/14
+        rounded-[22px]
 
-                                border
-                                border-white/12
+        bg-white/14
 
-                                backdrop-blur-xl
+        border
+        border-white/12
 
-                                flex
-                                items-center
+        backdrop-blur-xl
 
-                                gap-3
+        flex
+        items-center
+        justify-center
 
-                                px-4
+        gap-3
 
-                                text-sm
-                                sm:text-base
+        px-4
 
-                                font-bold
+        text-sm
+        sm:text-base
 
-                                text-white
+        font-bold
 
-                                transition-all
-                                duration-300
+        text-white
 
-                                hover:bg-white/20
+        transition-all
+        duration-300
 
-                                active:scale-[0.98]
-                            "
+        hover:bg-white/20
+
+        active:scale-[0.98]
+    "
                         >
 
-                            <Store
-                                size={20}
-                            />
+                            <Store size={20} />
 
                             Lihat Website
 
                         </button>
+
 
                         {/* LOGOUT */}
 
