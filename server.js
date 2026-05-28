@@ -341,11 +341,12 @@ app.use(
     express.static(uploadsDir)
 );
 
-if (fs.existsSync(distPath)) {
-
-    app.use(express.static(distPath));
-
-}
+app.use(
+    "/",
+    express.static(distPath, {
+        index: false,
+    })
+);
 
 // =========================
 // SPA FALLBACK
