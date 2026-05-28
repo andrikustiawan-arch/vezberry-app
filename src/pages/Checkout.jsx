@@ -221,18 +221,11 @@ export default function Checkout() {
         )}`;
 
         // open blank window immediately to avoid popup blocker
-        let winRef = null;
-        try {
-            winRef = window.open("", "_blank");
-        } catch (err) {
-            winRef = null;
-        }
 
         setIsSubmitting(true);
 
         try {
 
-            // perform checkout; processCheckout now returns waUrl as well (not required)
             await processCheckout({
 
                 orderData: {
@@ -261,19 +254,8 @@ export default function Checkout() {
 
             });
 
-            // navigate the previously opened window to WhatsApp (or open new)
             try {
-                if (winRef && !winRef.closed) {
-                    winRef.location.href = waUrl;
-                } else {
-                    window.open(waUrl, "_blank");
-                }
-            } catch (err) {
-                // fallback later via manual button
-            }
 
-            // Save customer data locally for next checkout
-            try {
                 localStorage.setItem(
                     "vezberry_customer",
                     JSON.stringify({
@@ -282,14 +264,17 @@ export default function Checkout() {
                         address: customerAddress,
                     })
                 );
+
             } catch (err) {
-                console.warn("Gagal menyimpan data customer lokal:", err);
+
+                console.warn(
+                    "Gagal menyimpan data customer lokal:",
+                    err
+                );
+
             }
 
-            // show fallback UI offering a manual WhatsApp button and start countdown
-            setWaUrlState(waUrl);
-            setCountdown(3);
-            setShowFallback(true);
+            window.location.href = waUrl;
 
         } catch (err) {
 
