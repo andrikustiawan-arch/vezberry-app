@@ -10,6 +10,15 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
+app.post("/api/test", (req, res) => {
+
+    return res.json({
+        success: true,
+        message: "POST TEST WORKING",
+    });
+
+});
+
 const PORT = process.env.PORT || 8080;
 
 console.log("REDEPLOY FORCE FINAL");
