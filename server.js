@@ -201,7 +201,7 @@ app.post(
 // SPA FALLBACK
 // =========================
 
-app.use((req, res) => {
+app.get("*", (req, res) => {
     const indexFile = path.join(distPath, "index.html");
 
     if (fs.existsSync(indexFile)) {
