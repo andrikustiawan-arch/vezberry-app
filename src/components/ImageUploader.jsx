@@ -1,9 +1,6 @@
-
 import React, { useState } from "react";
 
-export default function ImageUploader({
-    onUploadSuccess,
-}) {
+export default function ImageUploader(props) {
 
     const [uploading, setUploading] =
         useState(false);
@@ -22,7 +19,6 @@ export default function ImageUploader({
 
             setUploading(true);
 
-            // preview image
             setPreview(
                 URL.createObjectURL(file)
             );
@@ -49,9 +45,36 @@ export default function ImageUploader({
 
             if (data.success) {
 
-                if (onUploadSuccess) {
+                // SUPPORT MULTIPLE CALLBACK STYLE
 
-                    onUploadSuccess(
+                if (
+                    typeof props.onUploadSuccess
+                    === "function"
+                ) {
+
+                    props.onUploadSuccess(
+                        data.imageUrl
+                    );
+
+                }
+
+                if (
+                    typeof props.onChange
+                    === "function"
+                ) {
+
+                    props.onChange(
+                        data.imageUrl
+                    );
+
+                }
+
+                if (
+                    typeof props.setImageUrl
+                    === "function"
+                ) {
+
+                    props.setImageUrl(
                         data.imageUrl
                     );
 
