@@ -547,18 +547,17 @@ md:pb-24
                                         ">
 
                                             <img
-
                                                 src={
                                                     product.imageUrl ||
                                                     product.image_url ||
-                                                    product.image
+                                                    product.image ||
+                                                    "https://placehold.co/600x400?text=No+Image"
                                                 }
-
-                                                alt={
-                                                    product.name
-                                                }
-                                                loading="lazy"
-                                                decoding="async"
+                                                alt={product.name}
+                                                onError={(e) => {
+                                                    e.target.src =
+                                                        "https://placehold.co/600x400?text=No+Image";
+                                                }}
                                                 className="
                                                     w-full
                                                     h-full
@@ -568,7 +567,6 @@ md:pb-24
                                                     hover:scale-110
                                                 "
                                             />
-
                                             {/* BADGES */}
 
                                             <div className="
