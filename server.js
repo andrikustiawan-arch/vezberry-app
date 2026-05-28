@@ -300,6 +300,47 @@ app.put("/api/products/bulk", (req, res) => {
     }
 
 });
+
+// DELETE PRODUCT
+
+app.delete("/api/products/:id", (req, res) => {
+
+    try {
+
+        const productId = req.params.id;
+
+        const data =
+            fs.readFileSync(productsFile, "utf8");
+
+        const products =
+            JSON.parse(data);
+
+        const filteredProducts =
+            products.filter(
+                product => product.id !== productId
+            );
+
+        fs.writeFileSync(
+            productsFile,
+            JSON.stringify(filteredProducts, null, 2)
+        );
+
+        return res.json({
+            success: true,
+        });
+
+    } catch (err) {
+
+        console.error("DELETE PRODUCT ERROR:", err);
+
+        return res.status(500).json({
+            success: false,
+            error: "Failed delete product",
+        });
+
+    }
+
+});
 // =========================
 // ORDERS
 // =========================
