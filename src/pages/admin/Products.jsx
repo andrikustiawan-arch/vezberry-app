@@ -497,36 +497,39 @@ md:pb-24
                 ">
 
                     <AnimatePresence>
+                        {
+                            filteredProducts.map((product) => {
 
-                        {filteredProducts.map(
-                            product => (
+                                console.log("PRODUCT:", product);
 
-                                <motion.div
+                                return (
 
-                                    key={
-                                        product.id
-                                    }
+                                    <motion.div
 
-                                    initial={{
-                                        opacity: 0,
-                                        y: 20,
-                                    }}
+                                        key={
+                                            product.id
+                                        }
 
-                                    animate={{
-                                        opacity: 1,
-                                        y: 0,
-                                    }}
+                                        initial={{
+                                            opacity: 0,
+                                            y: 20,
+                                        }}
 
-                                    exit={{
-                                        opacity: 0,
-                                    }}
+                                        animate={{
+                                            opacity: 1,
+                                            y: 0,
+                                        }}
 
-                                    whileHover={{
-                                        y: -8,
-                                    }}
-                                >
+                                        exit={{
+                                            opacity: 0,
+                                        }}
 
-                                    <Card className="
+                                        whileHover={{
+                                            y: -8,
+                                        }}
+                                    >
+
+                                        <Card className="
                                         overflow-hidden
                                         rounded-[28px]
                                         md:rounded-[36px]
@@ -536,9 +539,9 @@ md:pb-24
                                         shadow-[0_10px_40px_rgba(0,0,0,0.08)]
                                     ">
 
-                                        {/* IMAGE */}
+                                            {/* IMAGE */}
 
-                                        <div className="
+                                            <div className="
                                             relative
                                             h-56
                                             sm:h-64
@@ -546,19 +549,19 @@ md:pb-24
                                             overflow-hidden
                                         ">
 
-                                            <img
-                                                src={
-                                                    product.imageUrl ||
-                                                    product.image_url ||
-                                                    product.image ||
-                                                    "https://placehold.co/600x400?text=No+Image"
-                                                }
-                                                alt={product.name}
-                                                onError={(e) => {
-                                                    e.target.src =
-                                                        "https://placehold.co/600x400?text=No+Image";
-                                                }}
-                                                className="
+                                                <img
+                                                    src={
+                                                        product.imageUrl ||
+                                                        product.image_url ||
+                                                        product.image ||
+                                                        "https://placehold.co/600x400?text=No+Image"
+                                                    }
+                                                    alt={product.name}
+                                                    onError={(e) => {
+                                                        e.target.src =
+                                                            "https://placehold.co/600x400?text=No+Image";
+                                                    }}
+                                                    className="
                                                     w-full
                                                     h-full
                                                     object-cover
@@ -566,10 +569,10 @@ md:pb-24
                                                     duration-700
                                                     hover:scale-110
                                                 "
-                                            />
-                                            {/* BADGES */}
+                                                />
+                                                {/* BADGES */}
 
-                                            <div className="
+                                                <div className="
                                                 absolute
                                                 top-4
                                                 left-4
@@ -578,9 +581,9 @@ md:pb-24
                                                 flex-wrap
                                             ">
 
-                                                {product.is_new && (
+                                                    {product.is_new && (
 
-                                                    <div className="
+                                                        <div className="
                                                         h-9
                                                         px-4
                                                         rounded-full
@@ -595,19 +598,19 @@ md:pb-24
                                                         gap-1
                                                     ">
 
-                                                        <Sparkles
-                                                            size={14}
-                                                        />
+                                                            <Sparkles
+                                                                size={14}
+                                                            />
 
-                                                        NEW
+                                                            NEW
 
-                                                    </div>
+                                                        </div>
 
-                                                )}
+                                                    )}
 
-                                                {product.is_preorder && (
+                                                    {product.is_preorder && (
 
-                                                    <div className="
+                                                        <div className="
                                                         h-9
                                                         px-4
                                                         rounded-full
@@ -622,24 +625,24 @@ md:pb-24
                                                         gap-1
                                                     ">
 
-                                                        <Clock3
-                                                            size={14}
-                                                        />
+                                                            <Clock3
+                                                                size={14}
+                                                            />
 
-                                                        PREORDER
-                                                        {product.ready_after_days > 0 && (
-                                                            <>
-                                                                {" "}H-
-                                                                {product.ready_after_days}
-                                                            </>
-                                                        )}
-                                                    </div>
+                                                            PREORDER
+                                                            {product.ready_after_days > 0 && (
+                                                                <>
+                                                                    {" "}H-
+                                                                    {product.ready_after_days}
+                                                                </>
+                                                            )}
+                                                        </div>
 
-                                                )}
+                                                    )}
 
-                                                {product.discount_percentage > 0 && (
+                                                    {product.discount_percentage > 0 && (
 
-                                                    <div className="
+                                                        <div className="
                                                         h-9
                                                         px-4
                                                         rounded-full
@@ -651,28 +654,28 @@ md:pb-24
                                                         font-black
                                                     ">
 
-                                                        -
-                                                        {
-                                                            product.discount_percentage
-                                                        }%
+                                                            -
+                                                            {
+                                                                product.discount_percentage
+                                                            }%
 
-                                                    </div>
+                                                        </div>
 
-                                                )}
+                                                    )}
+
+                                                </div>
 
                                             </div>
 
-                                        </div>
+                                            {/* CONTENT */}
 
-                                        {/* CONTENT */}
-
-                                        <CardContent className="
+                                            <CardContent className="
                                             p-6
                                         ">
 
-                                            {/* CATEGORY */}
+                                                {/* CATEGORY */}
 
-                                            <div className="
+                                                <div className="
                                                 text-xs
                                                 uppercase
                                                 tracking-[0.2em]
@@ -680,15 +683,15 @@ md:pb-24
                                                 text-pink-500
                                             ">
 
-                                                {
-                                                    product.category
-                                                }
+                                                    {
+                                                        product.category
+                                                    }
 
-                                            </div>
+                                                </div>
 
-                                            {/* NAME */}
+                                                {/* NAME */}
 
-                                            <h2 className="
+                                                <h2 className="
                                                 mt-3
                                                 text-2xl
                                                 font-black
@@ -696,46 +699,46 @@ md:pb-24
                                                 line-clamp-2
                                             ">
 
-                                                {
-                                                    product.name
-                                                }
+                                                    {
+                                                        product.name
+                                                    }
 
-                                            </h2>
+                                                </h2>
 
-                                            {/* DESCRIPTION */}
+                                                {/* DESCRIPTION */}
 
-                                            <p className="
+                                                <p className="
                                                 mt-3
                                                 text-slate-500
                                                 line-clamp-3
                                             ">
 
-                                                {
-                                                    product.description
-                                                }
+                                                    {
+                                                        product.description
+                                                    }
 
-                                            </p>
+                                                </p>
 
-                                            {/* PRICE */}
+                                                {/* PRICE */}
 
-                                            <div className="
+                                                <div className="
                                                 mt-6
                                                 text-3xl
                                                 font-black
                                                 text-pink-600
                                             ">
 
-                                                {
-                                                    formatPrice(
-                                                        product.price
-                                                    )
-                                                }
+                                                    {
+                                                        formatPrice(
+                                                            product.price
+                                                        )
+                                                    }
 
-                                            </div>
+                                                </div>
 
-                                            {/* STOCK */}
+                                                {/* STOCK */}
 
-                                            <div className="
+                                                <div className="
                                                 mt-3
                                                 inline-flex
                                                 items-center
@@ -749,29 +752,29 @@ md:pb-24
                                                 font-bold
                                             ">
 
-                                                <Package
-                                                    size={14}
-                                                />
+                                                    <Package
+                                                        size={14}
+                                                    />
 
-                                                Stock:
-                                                {
-                                                    product.stock || 0
-                                                }
+                                                    Stock:
+                                                    {
+                                                        product.stock || 0
+                                                    }
 
-                                                {product.stock <= 5 && (
-                                                    <span className="
+                                                    {product.stock <= 5 && (
+                                                        <span className="
                                                     text-red-500
                                                     font-black
                                                 ">
-                                                        • LOW
-                                                    </span>
-                                                )}
+                                                            • LOW
+                                                        </span>
+                                                    )}
 
-                                            </div>
+                                                </div>
 
-                                            {/* ACTIONS */}
+                                                {/* ACTIONS */}
 
-                                            <div className="
+                                                <div className="
                                                 mt-6
                                                 flex
                                                 flex
@@ -779,17 +782,17 @@ md:pb-24
                                                 sm:gap-3
                                             ">
 
-                                                <Button
+                                                    <Button
 
-                                                    onClick={() => {
+                                                        onClick={() => {
 
-                                                        setSelectedProduct(product);
+                                                            setSelectedProduct(product);
 
-                                                        setOpenModal(true);
+                                                            setOpenModal(true);
 
-                                                    }}
+                                                        }}
 
-                                                    className="
+                                                        className="
                                                         flex-1
                                                         h-12
                                                         rounded-2xl
@@ -802,56 +805,56 @@ md:pb-24
                                                         border
                                                         border-white/10
                                                     "
-                                                >
+                                                    >
 
-                                                    <Pencil
-                                                        className="
+                                                        <Pencil
+                                                            className="
                                                             w-4
                                                             h-4
                                                             mr-2
                                                         "
-                                                    />
+                                                        />
 
-                                                    Edit
+                                                        Edit
 
-                                                </Button>
+                                                    </Button>
 
-                                                <Button
+                                                    <Button
 
-                                                    onClick={() =>
-                                                        handleDelete(
-                                                            product.id
-                                                        )
-                                                    }
+                                                        onClick={() =>
+                                                            handleDelete(
+                                                                product.id
+                                                            )
+                                                        }
 
-                                                    className="
+                                                        className="
                                                         h-12
                                                         w-12
                                                         rounded-2xl
                                                         bg-red-500
                                                         hover:bg-red-600
                                                     "
-                                                >
+                                                    >
 
-                                                    <Trash2
-                                                        className="
+                                                        <Trash2
+                                                            className="
                                                             w-5
                                                             h-5
                                                         "
-                                                    />
+                                                        />
 
-                                                </Button>
+                                                    </Button>
 
-                                            </div>
+                                                </div>
 
-                                        </CardContent>
+                                            </CardContent>
 
-                                    </Card>
+                                        </Card>
 
-                                </motion.div>
+                                    </motion.div>
 
-                            )
-                        )}
+                                );
+                            })}
 
                     </AnimatePresence>
 
