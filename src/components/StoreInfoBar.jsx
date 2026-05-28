@@ -22,17 +22,38 @@ import {
 
 function parseTime(timeStr) {
 
-    if (!timeStr)
+    try {
+
+        if (
+            !timeStr ||
+            typeof timeStr !== "string"
+        ) {
+            return null;
+        }
+
+        if (!timeStr.includes(":")) {
+            return null;
+        }
+
+        const [h, m] =
+            timeStr
+                .split(":")
+                .map(Number);
+
+        if (
+            isNaN(h) ||
+            isNaN(m)
+        ) {
+            return null;
+        }
+
+        return h * 60 + m;
+
+    } catch {
+
         return null;
 
-    const [
-        h,
-        m
-    ] = timeStr
-        .split(':')
-        .map(Number);
-
-    return h * 60 + m;
+    }
 
 }
 
