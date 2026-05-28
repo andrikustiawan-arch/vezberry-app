@@ -955,13 +955,16 @@ export default function AdminLayout({
 
                         {/* WEBSITE */}
 
-                        <a
+                        <button
 
-                            href="/"
+                            onClick={() => {
 
-                            target="_blank"
+                                window.open(
+                                    "https://www.vezberry.com",
+                                    "_blank"
+                                );
 
-                            rel="noreferrer"
+                            }}
 
                             className="
                                 min-h-[54px]
@@ -1004,7 +1007,7 @@ export default function AdminLayout({
 
                             Lihat Website
 
-                        </a>
+                        </button>
 
                         {/* LOGOUT */}
 
