@@ -8,18 +8,25 @@ const DAYS = [
     "Sabtu",
 ];
 
-export function getStoreStatus(settingsOverride = null) {
+export function getStoreStatus(
+    settingsOverride = null
+) {
 
     try {
 
-        const settings = settingsOverride || null;
+        const settings =
+            settingsOverride || null;
 
         if (!settings) {
 
             return {
+
                 isOpen: true,
+
                 statusText: "BUKA",
+
                 today: null,
+
             };
 
         }
@@ -30,46 +37,120 @@ export function getStoreStatus(settingsOverride = null) {
         const todayName =
             DAYS[todayIndex];
 
-        const todaySchedule =
-            settings.operational_hours?.find(
-                (d) =>
-                    d.day === todayName
-            );
+        let todaySchedule = null;
+
+        // ====================================
+        // SUPPORT ARRAY
+        // ====================================
+
+        if (
+            Array.isArray(
+                settings.operational_hours
+            )
+        ) {
+
+            todaySchedule =
+                settings.operational_hours.find(
+
+                    (d) =>
+                        d.day === todayName
+
+                );
+
+        }
+
+        // ====================================
+        // SUPPORT OBJECT
+        // ====================================
+
+        else if (
+            typeof settings.operational_hours ===
+            "object"
+        ) {
+
+            todaySchedule =
+                settings.operational_hours[
+                todayName.toLowerCase()
+                ];
+
+        }
 
         if (!todaySchedule) {
 
             return {
+
                 isOpen: false,
+
                 statusText: "TUTUP",
+
                 today: null,
+
             };
 
         }
 
-        if (!todaySchedule.is_open) {
+        // ====================================
+        // LIBUR
+        // ====================================
+
+        const isEnabled =
+
+            todaySchedule.is_open ??
+
+            todaySchedule.enabled ??
+
+            false;
+
+        if (!isEnabled) {
 
             return {
+
                 isOpen: false,
+
                 statusText: "LIBUR",
+
                 today: todaySchedule,
+
             };
 
         }
+
+        // ====================================
+        // CURRENT TIME
+        // ====================================
 
         const now =
             new Date();
 
         const currentMinutes =
+
             now.getHours() * 60 +
+
             now.getMinutes();
 
+        // ====================================
+        // OPEN
+        // ====================================
+
+        const openValue =
+
+            todaySchedule.open ||
+
+            "00:00";
+
+        const closeValue =
+
+            todaySchedule.close ||
+
+            "23:59";
+
         const [openH, openM] =
-            todaySchedule.open
+            openValue
                 .split(":")
                 .map(Number);
 
         const [closeH, closeM] =
-            todaySchedule.close
+            closeValue
                 .split(":")
                 .map(Number);
 
@@ -79,9 +160,15 @@ export function getStoreStatus(settingsOverride = null) {
         const closeMinutes =
             closeH * 60 + closeM;
 
+        // ====================================
+        // STATUS
+        // ====================================
+
         const isOpen =
+
             currentMinutes >=
             openMinutes &&
+
             currentMinutes <=
             closeMinutes;
 
@@ -90,18 +177,21 @@ export function getStoreStatus(settingsOverride = null) {
             isOpen,
 
             statusText:
+
                 isOpen
                     ? "BUKA"
                     : "TUTUP",
 
-            today:
-                todaySchedule,
+            today: todaySchedule,
 
         };
 
     } catch (err) {
 
-        console.log(err);
+        console.log(
+            "STORE STATUS ERROR:",
+            err
+        );
 
         return {
 
