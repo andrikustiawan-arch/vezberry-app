@@ -16,6 +16,11 @@ app.get("/test", (req, res) => {
     res.send("TEST OK");
 });
 
+
+console.log("FORCE NEW SERVER BUILD 2026");
+
+
+
 // =========================
 // PATHS
 // =========================
