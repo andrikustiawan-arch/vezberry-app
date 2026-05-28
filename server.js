@@ -10,6 +10,15 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
+app.use((req, res, next) => {
+
+    console.log("METHOD:", req.method);
+    console.log("URL:", req.url);
+
+    next();
+
+});
+
 const PORT = process.env.PORT || 8080;
 
 app.get("/test", (req, res) => {
