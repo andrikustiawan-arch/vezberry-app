@@ -192,6 +192,15 @@ export default function StoreInfoBar({
     const closeTime =
         todaySchedule?.close || "--:--";
 
+    const currentMins =
+        now.getHours() * 60 +
+        now.getMinutes();
+
+    const openMins =
+        parseTime(openTime);
+
+    const closeMins =
+        parseTime(closeTime);
 
     // ========================================
     // SETTINGS
