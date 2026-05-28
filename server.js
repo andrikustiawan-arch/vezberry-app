@@ -200,7 +200,9 @@ app.post("/api/products", (req, res) => {
 
         const newProduct = {
 
-            id: Date.now().toString(),
+            id:
+                req.body.id ||
+                Date.now().toString(),
 
             name: req.body.name || "",
             category: req.body.category || "",
@@ -382,7 +384,9 @@ app.post("/api/orders", (req, res) => {
 
         const newOrder = {
 
-            id: Date.now().toString(),
+            id:
+                req.body.id ||
+                Date.now().toString(),
 
             customer_name:
                 req.body.customer_name || "",
