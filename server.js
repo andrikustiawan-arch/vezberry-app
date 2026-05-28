@@ -274,7 +274,78 @@ app.get("/api/orders", (req, res) => {
     }
 
 });
+// CREATE ORDER
 
+app.post("/api/orders", (req, res) => {
+
+    try {
+
+        console.log("POST ORDER BODY:", req.body);
+
+        const data =
+            fs.readFileSync(ordersFile, "utf8");
+
+        const orders =
+            JSON.parse(data);
+
+        const newOrder = {
+
+            id: Date.now().toString(),
+
+            customer_name:
+                req.body.customer_name || "",
+
+            phone:
+                req.body.phone || "",
+
+            customer_address:
+                req.body.customer_address || "",
+
+            notes:
+                req.body.notes || "",
+
+            items:
+                req.body.items || [],
+
+            total_price:
+                Number(req.body.total_price) || 0,
+
+            payment_method:
+                req.body.payment_method || "cash",
+
+            status: "pending",
+
+            createdAt:
+                new Date().toISOString(),
+
+        };
+
+        orders.unshift(newOrder);
+
+        fs.writeFileSync(
+            ordersFile,
+            JSON.stringify(orders, null, 2)
+        );
+
+        console.log("ORDER SAVED");
+
+        return res.status(201).json({
+            success: true,
+            order: newOrder,
+        });
+
+    } catch (err) {
+
+        console.error("CREATE ORDER ERROR:", err);
+
+        return res.status(500).json({
+            success: false,
+            error: "Failed create order",
+        });
+
+    }
+
+});
 // =========================
 // SETTINGS
 // =========================
