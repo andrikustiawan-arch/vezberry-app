@@ -1628,13 +1628,19 @@ export default function StoreSettingsPage() {
                                                     value={
                                                         item.open
                                                     }
-                                                    onChange={(e) =>
+                                                    onChange={(e) => {
+
+                                                        const value =
+                                                            e.target.value
+                                                                .slice(0, 5);
+
                                                         updateOperationalDay(
                                                             index,
                                                             "open",
-                                                            e.target.value
-                                                        )
-                                                    }
+                                                            value
+                                                        );
+
+                                                    }}
                                                     className="
                                                         border-0
                                                         shadow-none
@@ -1687,13 +1693,19 @@ export default function StoreSettingsPage() {
                                                     value={
                                                         item.close
                                                     }
-                                                    onChange={(e) =>
+                                                    onChange={(e) => {
+
+                                                        const value =
+                                                            e.target.value
+                                                                .slice(0, 5);
+
                                                         updateOperationalDay(
                                                             index,
                                                             "close",
-                                                            e.target.value
-                                                        )
-                                                    }
+                                                            value
+                                                        );
+
+                                                    }}
                                                     className="
                                                         border-0
                                                         shadow-none

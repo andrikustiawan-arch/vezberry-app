@@ -144,6 +144,23 @@ export function getStoreStatus(
 
             "23:59";
 
+        if (
+            !openValue.includes(":") ||
+            !closeValue.includes(":")
+        ) {
+
+            return {
+
+                isOpen: false,
+
+                statusText: "TUTUP",
+
+                today: todaySchedule,
+
+            };
+
+        }
+
         const [openH, openM] =
             openValue
                 .split(":")
