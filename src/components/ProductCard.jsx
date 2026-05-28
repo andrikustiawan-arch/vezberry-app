@@ -182,9 +182,9 @@ export default function ProductCard({
                     decoding="async"
                     src={
                         product.imageUrl ||
-                        product.image_url ||
                         product.image ||
-                        "https://placehold.co/600x400?text=No+Image"
+                        product.image_url ||
+                        "/no-image.png"
                     }
                     alt={
                         product.name
