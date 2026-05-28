@@ -444,6 +444,60 @@ app.post("/api/orders", (req, res) => {
 
 app.get("/api/settings", (req, res) => {
 
+
+    // SAVE SETTINGS
+
+    app.put("/api/settings", (req, res) => {
+
+        try {
+
+            console.log(
+                "SAVE SETTINGS:",
+                req.body
+            );
+
+            fs.writeFileSync(
+
+                settingsFile,
+
+                JSON.stringify(
+                    req.body,
+                    null,
+                    2
+                )
+
+            );
+
+            return res.json({
+
+                success: true,
+
+                settings: req.body,
+
+            });
+
+        } catch (err) {
+
+            console.error(
+                "SAVE SETTINGS ERROR:",
+                err
+            );
+
+            return res.status(500).json({
+
+                success: false,
+
+                error: "Failed save settings",
+
+            });
+
+        }
+
+    });
+
+
+
+
     try {
 
         const data =
