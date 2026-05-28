@@ -12,7 +12,7 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 
-console.log("VEZBERRY SERVER ACTIVE 2026");
+console.log("REDEPLOY FORCE FINAL");
 
 // =========================
 // DEBUG LOGGER
