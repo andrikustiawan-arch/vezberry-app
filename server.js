@@ -320,7 +320,7 @@ app.post(
             }
 
             const imageUrl =
-                `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+                `https://${req.get("host")}/uploads/${req.file.filename}`;
 
             return res.json({
                 success: true,
