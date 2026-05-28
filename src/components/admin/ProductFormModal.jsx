@@ -795,34 +795,42 @@ export default function ProductFormModal({
 
                                                 // RESIZE
 
-                                                const resized =
-                                                    await resizeImage(
-                                                        fileOrUrl,
-                                                        300,
-                                                        300,
-                                                        0.5
-                                                    );
+// RESIZE
 
-                                                // TO BASE64
+const resized =
+    await resizeImage(
+        fileOrUrl,
+        300,
+        300,
+        0.5
+    );
 
-                                                const reader =
-                                                    new FileReader();
+// UPLOAD TO SERVER
 
-reader.onloadend = () => {
+const response =
+    await api.upload(
+        resized
+    );
 
-    const base64 =
-        String(reader.result || '');
+const imageUrl =
+    response?.url ||
+    response?.imageUrl ||
+    "";
 
-    setForm((f) => ({
-        ...f,
-        image_url: base64,
-    }));
+if (!imageUrl) {
 
-};
+    toast.error(
+        "Upload gambar gagal"
+    );
 
-                                                reader.readAsDataURL(
-                                                    resized
-                                                );
+    return;
+
+}
+
+setForm((f) => ({
+    ...f,
+    image_url: imageUrl,
+}));
 
                                             } catch (err) {
 
