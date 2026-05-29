@@ -410,6 +410,12 @@ export default function OrderHistory() {
                             {orders.map(
                                 (order, index) => {
 
+                                    console.log(
+                                        "ORDER STATUS:",
+                                        order.id,
+                                        order.status
+                                    );
+
                                     const statusKey =
                                         String(order.status || "")
                                             .toLowerCase()
