@@ -442,6 +442,120 @@ app.post("/api/orders", (req, res) => {
     }
 
 });
+
+// UPDATE ORDER
+
+app.put("/api/orders/:id", (req, res) => {
+
+    try {
+
+        const orderId = req.params.id;
+
+        const orders =
+            JSON.parse(
+                fs.readFileSync(
+                    ordersFile,
+                    "utf8"
+                )
+            );
+
+        const index =
+            orders.findIndex(
+                order => order.id === orderId
+            );
+
+        if (index === -1) {
+
+            return res.status(404).json({
+                success: false,
+                error: "Order not found",
+            });
+
+        }
+
+        orders[index] = {
+            ...orders[index],
+            ...req.body,
+            updatedAt:
+                new Date().toISOString(),
+        };
+
+        fs.writeFileSync(
+            ordersFile,
+            JSON.stringify(
+                orders,
+                null,
+                2
+            )
+        );
+
+        return res.json({
+            success: true,
+            order: orders[index],
+        });
+
+    } catch (err) {
+
+        console.error(
+            "UPDATE ORDER ERROR:",
+            err
+        );
+
+        return res.status(500).json({
+            success: false,
+            error: "Failed update order",
+        });
+
+    }
+
+});
+
+app.delete("/api/orders/:id", (req, res) => {
+
+    try {
+
+        const orderId =
+            req.params.id;
+
+        const orders =
+            JSON.parse(
+                fs.readFileSync(
+                    ordersFile,
+                    "utf8"
+                )
+            );
+
+        const filtered =
+            orders.filter(
+                order =>
+                    order.id !== orderId
+            );
+
+        fs.writeFileSync(
+            ordersFile,
+            JSON.stringify(
+                filtered,
+                null,
+                2
+            )
+        );
+
+        return res.json({
+            success: true
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        return res.status(500).json({
+            success: false
+        });
+
+    }
+
+});
+
 // =========================
 // SETTINGS
 // =========================
