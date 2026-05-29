@@ -55,48 +55,29 @@ import {
 const statusConfig = {
 
     pending: {
-
         label: "Menunggu Pembayaran",
-
-        icon: Clock3,
-
-        className:
-            "bg-amber-100 text-amber-700 border-amber-200",
-
+        color: "yellow"
     },
 
-    paid: {
+    processing: {
+        label: "Diproses",
+        color: "blue"
+    },
 
-        label: "Sudah Dibayar",
+    siap: {
+        label: "Siap",
+        color: "green"
+    },
 
-        icon: CheckCircle2,
-
-        className:
-            "bg-emerald-100 text-emerald-700 border-emerald-200",
-
+    selesai: {
+        label: "Selesai",
+        color: "green"
     },
 
     completed: {
-
         label: "Selesai",
-
-        icon: Truck,
-
-        className:
-            "bg-blue-100 text-blue-700 border-blue-200",
-
-    },
-
-    cancelled: {
-
-        label: "Dibatalkan",
-
-        icon: XCircle,
-
-        className:
-            "bg-red-100 text-red-700 border-red-200",
-
-    },
+        color: "green"
+    }
 
 };
 
@@ -429,11 +410,13 @@ export default function OrderHistory() {
                             {orders.map(
                                 (order, index) => {
 
-                                    const status =
-                                        statusConfig[
-                                        order.status
-                                        ] ||
+                                    const statusKey =
+                                        String(order.status || "")
+                                            .toLowerCase()
+                                            .trim();
 
+                                    const status =
+                                        statusConfig[statusKey] ||
                                         statusConfig.pending;
 
                                     const StatusIcon =
