@@ -24,10 +24,29 @@ const prayerIcons = {
 // PARSE TIME
 // ===============================
 const parseTime = (timeStr) => {
+
   if (!timeStr) return null;
-  const [h, m] = timeStr.split(":").map(Number);
+
+  const clean =
+    timeStr.split(" ")[0];
+
+  const [h, m] =
+    clean.split(":").map(Number);
+
   const d = new Date();
-  d.setHours(h, m, 0, 0);
+
+  d.setHours(
+    h,
+    m,
+    0,
+    0
+  );
+
+  // Kurangi 1 menit
+  d.setMinutes(
+    d.getMinutes() - 1
+  );
+
   return d;
 };
 
@@ -65,19 +84,45 @@ export default function PrayerWidget() {
   const [times, setTimes] = useState(null);
   const [now, setNow] = useState(new Date());
 
+  const fetchData = async () => {
+
+    try {
+
+      const res = await fetch(
+        "https://api.aladhan.com/v1/timingsByCity?city=Jakarta&country=Indonesia&method=11&tune=2,2,2,2,2,2,2,2,2"
+      );
+
+      const data =
+        await res.json();
+
+      setTimes(
+        data.data.timings
+      );
+
+    } catch (err) {
+
+      console.error(
+        "PRAYER FETCH ERROR",
+        err
+      );
+
+    }
+
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(
-          "https://api.aladhan.com/v1/timingsByCity?city=Jakarta&country=Indonesia&method=11&tune=2,2,2,2,2,2,2,2,2"
-        );
-        const data = await res.json();
-        setTimes(data.data.timings);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+
     fetchData();
+
+    const refresh =
+      setInterval(
+        fetchData,
+        60 * 60 * 1000
+      );
+
+    return () =>
+      clearInterval(refresh);
+
   }, []);
 
   useEffect(() => {
@@ -94,7 +139,7 @@ export default function PrayerWidget() {
       { name: "Ashar", time: parseTime(times.Asr) },
       { name: "Maghrib", time: parseTime(times.Maghrib) },
       { name: "Isya", time: parseTime(times.Isha) },
-    ];
+    ].filter(item => item.time);
 
     for (let i = 0; i < schedule.length - 1; i++) {
       const start = schedule[i].time;
@@ -115,8 +160,20 @@ export default function PrayerWidget() {
     const last = schedule[schedule.length - 1];
     const first = schedule[0];
 
-    const nextDay = new Date(first.time);
-    nextDay.setDate(nextDay.getDate() + 1);
+    const nextDay = new Date();
+
+    nextDay.setHours(
+      first.time.getHours(),
+      first.time.getMinutes(),
+      0,
+      0
+    );
+
+    if (nextDay <= now) {
+      nextDay.setDate(
+        nextDay.getDate() + 1
+      );
+    }
 
     return {
       schedule,
@@ -130,22 +187,153 @@ export default function PrayerWidget() {
 
   const prayer = getState();
 
+  // =====================================
+  // LOADING
+  // =====================================
+
   if (!prayer) {
+
     return (
+
       <div className="px-4 md:px-6 lg:px-8 mt-0.5">
-        <div className="max-w-7xl mx-auto p-3 text-center text-sm bg-slate-200 rounded-xl">
+
+        <div className="
+        max-w-7xl
+        mx-auto
+        p-3
+        text-center
+        text-sm
+        bg-slate-200
+        rounded-xl
+      ">
+
           Loading waktu sholat...
+
         </div>
+
       </div>
+
     );
+
   }
 
-  const progress = Math.min(
-    1,
-    Math.max(0, (now - prayer.start) / (prayer.end - prayer.start))
-  );
+  // =====================================
+  // DEBUG
+  // =====================================
 
-  const remaining = formatCountdown(prayer.end - now);
+  const hoursLeft =
+    (
+      prayer.end - now
+    ) / 3600000;
+
+  if (
+    import.meta.env.DEV
+  ) {
+
+    console.log(
+      "[PRAYER DEBUG]",
+      {
+
+        current:
+          prayer.current.name,
+
+        next:
+          prayer.next.name,
+
+        start:
+          prayer.start,
+
+        end:
+          prayer.end,
+
+        hoursLeft
+
+      }
+    );
+
+  }
+
+  // =====================================
+  // PROGRESS
+  // =====================================
+
+  const duration =
+    prayer.end - prayer.start;
+
+
+  const progress =
+    duration > 0
+      ? Math.min(
+        1,
+        Math.max(
+          0,
+          (now - prayer.start) /
+          duration
+        )
+      )
+      : 0;
+
+  let diff =
+    prayer.end - now;
+
+  if (diff < 0) {
+    diff = 0;
+  }
+
+  const hours =
+    diff / 3600000;
+
+  if (
+    hours > 12 ||
+    hours < 0
+  ) {
+
+    console.warn(
+      "[PRAYER WARNING]",
+      {
+        current:
+          prayer.current.name,
+
+        next:
+          prayer.next.name,
+
+        start:
+          prayer.start,
+
+        end:
+          prayer.end,
+
+        hours
+      }
+    );
+
+  }
+
+  if (hours > 12) {
+
+    console.error(
+      "[PRAYER INVALID COUNTDOWN]",
+      {
+        current:
+          prayer.current.name,
+
+        next:
+          prayer.next.name,
+
+        start:
+          prayer.start,
+
+        end:
+          prayer.end,
+
+        hours
+      }
+    );
+
+  }
+
+  const remaining =
+    formatCountdown(diff);
 
   return (
     <div className="w-full px-4 md:px-6 lg:px-8 mt-0.5">
@@ -209,7 +397,7 @@ export default function PrayerWidget() {
                     className={isActive ? "text-yellow-300" : ""}
                   />
 
-                  <span className="text-[14px] mt0.5 font-semibold">
+                  <span className="text-[14px] mt-0.5 font-semibold">
                     {item.name}
                   </span>
 
