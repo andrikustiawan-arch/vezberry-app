@@ -126,9 +126,27 @@ export default function OrderHistory() {
                     : [];
 
                 const sorted = [...filteredOrders].sort(
-                    (a, b) =>
-                        new Date(b.created_date || b.created_at) -
-                        new Date(a.created_date || a.created_at)
+                    (a, b) => {
+
+                        const dateA =
+                            new Date(
+                                a.createdAt ||
+                                a.created_at ||
+                                a.created_date ||
+                                0
+                            );
+
+                        const dateB =
+                            new Date(
+                                b.createdAt ||
+                                b.created_at ||
+                                b.created_date ||
+                                0
+                            );
+
+                        return dateB - dateA;
+
+                    }
                 );
 
                 setOrders(sorted);
@@ -176,107 +194,105 @@ export default function OrderHistory() {
             {/* HEADER */}
 
             <header className="
-                sticky
-                top-0
-                z-50
-                bg-white/80
-                backdrop-blur-2xl
-                border-b
-                border-rose-100
-            ">
+    sticky
+    top-0
+    z-50
+    bg-white/80
+    backdrop-blur-2xl
+    border-b
+    border-rose-100
+">
 
                 <div className="
-                    max-w-6xl
-                    mx-auto
-                    px-4
-                    py-4
-                    flex
-                    items-center
-                    justify-between
-                ">
+        max-w-6xl
+        mx-auto
+        px-4
+        py-4
+    ">
 
                     <div className="
-                        flex
-                        items-center
-                        gap-4
-                    ">
+            flex
+            items-center
+            gap-4
+        ">
 
-                        <Link
-                            to={createPageUrl("Home")}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="
+                    rounded-full
+                "
+                            onClick={() => {
+
+                                if (
+                                    window.history.length > 1
+                                ) {
+
+                                    window.history.back();
+
+                                } else {
+
+                                    window.location.href = "/";
+
+                                }
+
+                            }}
                         >
 
-                            <Button
-                                variant="ghost"
-                                size="icon"
+                            <ArrowLeft
                                 className="
-                                    rounded-full
-                                "
-                            >
+                        w-5
+                        h-5
+                    "
+                            />
 
-                                <ArrowLeft
-                                    className="
-                                        w-5
-                                        h-5
-                                    "
-                                />
-
-                            </Button>
-
-                        </Link>
+                        </Button>
 
                         <div className="
-                            flex
-                            items-center
-                            gap-4
-                        ">
+                w-14
+                h-14
+                rounded-2xl
+                bg-gradient-to-br
+                from-pink-500
+                via-rose-500
+                to-orange-400
+                flex
+                items-center
+                justify-center
+                shadow-xl
+            ">
 
-                            <div className="
-                                w-14
-                                h-14
-                                rounded-2xl
-                                bg-gradient-to-br
-                                from-pink-500
-                                via-rose-500
-                                to-orange-400
-                                flex
-                                items-center
-                                justify-center
-                                shadow-xl
-                            ">
+                            <ShoppingBag
+                                className="
+                        text-white
+                    "
+                                size={28}
+                            />
 
-                                <ShoppingBag
-                                    className="
-                                        text-white
-                                    "
-                                    size={28}
-                                />
+                        </div>
 
-                            </div>
+                        <div>
 
-                            <div>
+                            <h1 className="
+                    text-3xl
+                    font-black
+                    tracking-tight
+                    bg-gradient-to-r
+                    from-pink-600
+                    to-rose-600
+                    bg-clip-text
+                    text-transparent
+                ">
+                                Riwayat Pesanan
+                            </h1>
 
-                                <h1 className="
-                                    text-3xl
-                                    font-black
-                                    tracking-tight
-                                    bg-gradient-to-r
-                                    from-pink-600
-                                    to-rose-600
-                                    bg-clip-text
-                                    text-transparent
-                                ">
-                                    Riwayat Pesanan
-                                </h1>
-
-                                <p className="
-                                    text-sm
-                                    text-slate-500
-                                    mt-1
-                                ">
-                                    VEZBERRY Order History
-                                </p>
-
-                            </div>
+                            <p className="
+                    text-sm
+                    text-slate-500
+                    mt-1
+                ">
+                                VEZBERRY Order History
+                            </p>
 
                         </div>
 
@@ -526,12 +542,28 @@ export default function OrderHistory() {
                                                                 />
 
                                                                 {
-                                                                    format(
-                                                                        new Date(
-                                                                            order.created_at || order.created_date
-                                                                        ),
-                                                                        "dd MMM yyyy • HH:mm"
-                                                                    )
+                                                                    (() => {
+
+                                                                        const dateValue =
+                                                                            order.createdAt ||
+                                                                            order.created_at ||
+                                                                            order.created_date;
+
+                                                                        if (!dateValue)
+                                                                            return "-";
+
+                                                                        const parsedDate =
+                                                                            new Date(dateValue);
+
+                                                                        if (isNaN(parsedDate.getTime()))
+                                                                            return "-";
+
+                                                                        return format(
+                                                                            parsedDate,
+                                                                            "dd MMM yyyy • HH:mm"
+                                                                        );
+
+                                                                    })()
                                                                 }
 
                                                             </div>
@@ -621,20 +653,18 @@ export default function OrderHistory() {
                                                         }
                                                     </h4>
 
-                                                    {order.phone || order.customer_phone && (
+                                                    {
+                                                        (order.phone || order.customer_phone) && (
 
-                                                        <p className="
-                                                            text-slate-500
-                                                            mt-2
-                                                        ">
+                                                            <p className="
+            text-slate-500
+            mt-2
+        ">
+                                                                {order.phone || order.customer_phone}
+                                                            </p>
 
-                                                            {
-                                                                order.customer_phone
-                                                            }
-
-                                                        </p>
-
-                                                    )}
+                                                        )
+                                                    }
 
                                                 </div>
 
