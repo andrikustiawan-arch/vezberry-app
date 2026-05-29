@@ -67,7 +67,7 @@ export default function HeroSlider({
                         title: "VEZBERRY",
 
                         description:
-                            "Premium Dessert & Bakery",
+                            "Premium Pizza & Bakery",
 
                     };
 
@@ -431,7 +431,7 @@ export default function HeroSlider({
                                 text-sm
                                 md:text-lg
 
-                                font-black
+                                font-bold
                             "
                         >
 
@@ -839,51 +839,47 @@ export default function HeroSlider({
 
                         <button
 
-                            onClick={
-                                onExplore
-                            }
+                            onClick={onExplore}
 
                             className="
                                 shimmer-btn
 
-                                h-11
-                                md:h-16
+                                h-9
+                                md:h-9
 
-                                px-5
-                                md:px-10
+                                px-3
+                                md:px-5
 
-                                rounded-2xl
-                                md:rounded-3xl
+                                rounded-xl
+                                md:rounded-2xl
 
                                 bg-gradient-to-r
                                 from-pink-500
                                 to-rose-500
 
+                                text-white
+
                                 hover:scale-105
 
-                                shadow-[0_20px_50px_rgba(255,80,120,0.45)]
+                                transition-all
+                                duration-300
 
-                                text-sm
-                                md:text-lg
+                                shadow-lg
 
-                                font-black
+                                text-xs
+                                md:text-sm
+
+                                font-semibold
+
+                                flex
+                                items-center
+                                justify-center
                             "
                         >
 
-                            Explore Menu
-
-                            <ArrowRight
-                                className="
-                                    ml-2
-                                    md:ml-3
-
-                                    w-4
-                                    h-4
-
-                                    md:w-5
-                                    md:h-5
-                                "
-                            />
+                            <span className="animate-bounce">
+                                👇
+                            </span>
 
                         </button>
 
