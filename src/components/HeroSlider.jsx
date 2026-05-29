@@ -11,7 +11,6 @@ import {
 
 import {
     Sparkles,
-    ArrowRight,
 } from "lucide-react";
 
 // ========================================
@@ -241,147 +240,30 @@ export default function HeroSlider({
 
                 {/* CONTENT */}
 
-                <div className="
-                    relative
-                    z-10
+                <div
+                    className="
+        relative
+        z-10
 
-                    h-full
+        h-full
 
-                    flex
-                    flex-col
+        flex
+        items-start
 
-                    items-center
-                    justify-center
+        px-4
+        sm:px-6
+        md:px-12
+        xl:px-16
 
-                    text-center
-
-                    px-4
-                    md:px-8
-
-                    text-white
-                ">
-
-                    <motion.div
-
-                        initial={{
-                            scale: 0.8,
-                            opacity: 0,
-                        }}
-
-                        animate={{
-                            scale: 1,
-                            opacity: 1,
-                        }}
-
-                        className="
-                            w-14
-                            h-14
-
-                            md:w-24
-                            md:h-24
-
-                            rounded-full
-
-                            bg-white/20
-
-                            backdrop-blur-xl
-
-                            flex
-                            items-center
-                            justify-center
-
-                            mb-4
-                            md:mb-8
-                        "
-                    >
-
-                        <Sparkles
-                            size={30}
-                        />
-
-                    </motion.div>
-
-                    {/* TITLE */}
-
-                    <motion.h1
-
-                        initial={{
-                            y: 30,
-                            opacity: 0,
-                        }}
-
-                        animate={{
-                            y: 0,
-                            opacity: 1,
-                        }}
-
-                        transition={{
-                            delay: 0.25,
-                        }}
-
-                        className="
-                            text-3xl
-                            sm:text-4xl
-                            md:text-6xl
-                            xl:text-7xl
-
-                            font-black
-
-                            leading-tight
-                        "
-                    >
-
-                        VEZBERRY
-
-                    </motion.h1>
-
-                    {/* DESCRIPTION */}
-
-                    <motion.p
-
-                        initial={{
-                            y: 30,
-                            opacity: 0,
-                        }}
-
-                        animate={{
-                            y: 0,
-                            opacity: 1,
-                        }}
-
-                        transition={{
-                            delay: 0.25,
-                        }}
-
-                        className="
-                            mt-3
-                            md:mt-6
-
-                            max-w-2xl
-
-                            text-sm
-                            sm:text-base
-                            md:text-xl
-                            xl:text-2xl
-
-                            text-white/90
-
-                            leading-relaxed
-                        "
-                    >
-
-                        Premium dessert &
-                        modern drinks
-                        experience 🍓
-
-                    </motion.p>
-
-                    {/* BUTTON */}
+        pt-6
+        md:pt-10
+    "
+                >
 
                     <motion.div
 
                         initial={{
-                            y: 30,
+                            y: 20,
                             opacity: 0,
                         }}
 
@@ -390,77 +272,51 @@ export default function HeroSlider({
                             opacity: 1,
                         }}
 
-                        transition={{
-                            delay: 0.25,
-                        }}
-
                         className="
-                            mt-5
-                            md:mt-10
-                        "
+            inline-flex
+
+            items-center
+            gap-2
+
+            h-9
+            md:h-12
+
+            px-4
+            md:px-5
+
+            rounded-full
+
+            bg-white/10
+
+            border
+            border-white/20
+
+            backdrop-blur-xl
+
+            text-white
+
+            text-xs
+            md:text-base
+
+            font-bold
+
+            shadow-lg
+        "
                     >
 
-                        <button
+                        <Sparkles size={16} />
 
-                            onClick={
-                                onExplore
-                            }
-
-                            className="
-                                shimmer-btn
-
-                                h-11
-                                md:h-16
-
-                                px-5
-                                md:px-10
-
-                                rounded-2xl
-                                md:rounded-3xl
-
-                                bg-white
-
-                                text-pink-600
-
-                                hover:bg-white
-
-                                hover:scale-105
-
-                                shadow-2xl
-
-                                text-sm
-                                md:text-lg
-
-                                font-bold
-                            "
-                        >
-
-                            Explore Menu
-
-                            <ArrowRight
-                                className="
-                                    ml-2
-                                    md:ml-3
-
-                                    w-4
-                                    h-4
-
-                                    md:w-5
-                                    md:h-5
-                                "
-                            />
-
-                        </button>
+                        Humbly Crafted, Premium Taste
 
                     </motion.div>
 
                 </div>
-
             </div>
 
         );
 
     }
+
 
     // ========================================
     // ACTIVE
@@ -653,312 +509,129 @@ export default function HeroSlider({
 
             {/* CONTENT */}
 
-            <div className="
-                relative
-                z-10
+            <div
+                className="
+        relative
+        z-10
 
-                h-full
+        h-full
 
-                flex
-                items-center
+        flex
+        items-start
 
-                px-4
-                sm:px-6
-                md:px-12
-                xl:px-16
-            ">
+        px-4
+        sm:px-6
+        md:px-12
+        xl:px-16
 
-                <div className="
-                    max-w-3xl
-                ">
+        pt-6
+        md:pt-10
+    "
+            >
 
-                    {/* BADGE */}
+                <motion.div
 
-                    <motion.div
+                    initial={{
+                        y: 20,
+                        opacity: 0,
+                    }}
 
-                        initial={{
-                            y: 20,
-                            opacity: 0,
-                        }}
+                    animate={{
+                        y: 0,
+                        opacity: 1,
+                    }}
 
-                        animate={{
-                            y: 0,
-                            opacity: 1,
-                        }}
+                    className="
+            inline-flex
 
-                        className="
-                            inline-flex
+            items-center
+            gap-2
 
-                            items-center
-                            gap-2
+            h-9
+            md:h-12
 
-                            h-9
-                            md:h-12
+            px-4
+            md:px-5
 
-                            px-4
-                            md:px-5
+            rounded-full
 
-                            rounded-full
+            bg-white/10
 
-                            bg-white/10
+            border
+            border-white/20
 
-                            border
-                            border-white/20
+            backdrop-blur-xl
 
-                            backdrop-blur-xl
+            text-white
 
-                            text-white
+            text-xs
+            md:text-base
 
-                            text-xs
-                            md:text-base
+            font-bold
 
-                            font-bold
+            shadow-lg
+        "
+                >
 
-                            shadow-lg
-                        "
-                    >
+                    <Sparkles size={18} />
 
-                        <Sparkles
-                            size={16}
-                        />
+                    Humbly Crafted, Premium Taste
 
-                        Humbly crafted,
-                        premium taste
-
-                    </motion.div>
-
-                    {/* TITLE */}
-
-                    <motion.h1
-
-                        initial={{
-                            y: 40,
-                            opacity: 0,
-                        }}
-
-                        animate={{
-                            y: 0,
-                            opacity: 1,
-                        }}
-
-                        transition={{
-                            delay: 0.2,
-                        }}
-
-                        className="
-                            mt-4
-                            md:mt-8
-
-                            text-3xl
-                            sm:text-4xl
-                            md:text-6xl
-                            xl:text-7xl
-
-                            font-black
-
-                            leading-tight
-
-                            text-white
-                        "
-                    >
-
-                        {
-                            banner.title
-                        }
-
-                    </motion.h1>
-
-                    {/* DESCRIPTION */}
-
-                    <motion.p
-
-                        initial={{
-                            y: 40,
-                            opacity: 0,
-                        }}
-
-                        animate={{
-                            y: 0,
-                            opacity: 1,
-                        }}
-
-                        transition={{
-                            delay: 0.35,
-                        }}
-
-                        className="
-                            mt-3
-                            md:mt-6
-
-                            text-sm
-                            sm:text-base
-                            md:text-xl
-                            xl:text-2xl
-
-                            text-white/85
-
-                            leading-relaxed
-
-                            max-w-2xl
-                        "
-                    >
-
-                        {
-                            banner.description ||
-
-                            banner.subtitle ||
-
-                            ""
-                        }
-
-                    </motion.p>
-
-                    {/* BUTTON */}
-
-                    <motion.div
-
-                        initial={{
-                            y: 40,
-                            opacity: 0,
-                        }}
-
-                        animate={{
-                            y: 0,
-                            opacity: 1,
-                        }}
-
-                        transition={{
-                            delay: 0.5,
-                        }}
-
-                        className="
-                            mt-5
-                            md:mt-10
-                        "
-                    >
-
-                        <button
-
-                            onClick={onExplore}
-
-                            className="
-                                shimmer-btn
-
-                                h-9
-                                md:h-9
-
-                                px-3
-                                md:px-5
-
-                                rounded-xl
-                                md:rounded-2xl
-
-                                bg-gradient-to-r
-                                from-pink-500
-                                to-rose-500
-
-                                text-white
-
-                                hover:scale-105
-
-                                transition-all
-                                duration-300
-
-                                shadow-lg
-
-                                text-xs
-                                md:text-sm
-
-                                font-semibold
-
-                                flex
-                                items-center
-                                justify-center
-                            "
-                        >
-
-                            <span className="animate-bounce">
-                                👇
-                            </span>
-
-                        </button>
-
-                    </motion.div>
-
-                </div>
+                </motion.div>
 
             </div>
 
             {/* DOTS */}
 
-            <div className="
-                absolute
-
-                bottom-4
-                md:bottom-8
-
-                left-1/2
-                -translate-x-1/2
-
-                z-20
-
-                flex
-                gap-2
-                md:gap-3
-            ">
+            <div
+                className="
+        absolute
+        bottom-4
+        md:bottom-8
+        left-1/2
+        -translate-x-1/2
+        z-20
+        flex
+        gap-2
+        md:gap-3
+    "
+            >
 
                 {normalizedBanners.map(
-
                     (_, index) => (
-
                         <button
-
                             key={index}
-
-                            onClick={() =>
-                                slideTo(
-                                    index
-                                )
-                            }
-
-                            className={`
-                                transition-all
-                                duration-500
-
-                                rounded-full
-
-                                ${current === index
-
+                            onClick={() => slideTo(index)}
+                            className={
+                                current === index
                                     ? `
-                                        w-8
-                                        md:w-12
-
-                                        h-3
-                                        md:h-4
-
-                                        bg-white
-                                    `
-
+                        w-8
+                        md:w-12
+                        h-3
+                        md:h-4
+                        rounded-full
+                        bg-white
+                        transition-all
+                        duration-500
+                    `
                                     : `
-                                        w-3
-                                        md:w-4
-
-                                        h-3
-                                        md:h-4
-
-                                        bg-white/40
-                                    `
-                                }
-                            `}
+                        w-3
+                        md:w-4
+                        h-3
+                        md:h-4
+                        rounded-full
+                        bg-white/40
+                        transition-all
+                        duration-500
+                    `
+                            }
                         />
-
                     )
-
                 )}
 
             </div>
 
-        </div >
+        </div>
 
     );
 
