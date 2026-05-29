@@ -56,28 +56,63 @@ const statusConfig = {
 
     pending: {
         label: "Menunggu Pembayaran",
-        color: "yellow"
+        icon: Clock3,
+        className: `
+            bg-yellow-50
+            border-yellow-200
+            text-yellow-700
+        `,
     },
 
     processing: {
         label: "Diproses",
-        color: "blue"
+        icon: Truck,
+        className: `
+            bg-blue-50
+            border-blue-200
+            text-blue-700
+        `,
     },
 
     siap: {
-        label: "Siap",
-        color: "green"
+        label: "Siap Diambil",
+        icon: CheckCircle2,
+        className: `
+            bg-green-50
+            border-green-200
+            text-green-700
+        `,
     },
 
     selesai: {
         label: "Selesai",
-        color: "green"
+        icon: CheckCircle2,
+        className: `
+            bg-green-50
+            border-green-200
+            text-green-700
+        `,
     },
 
     completed: {
         label: "Selesai",
-        color: "green"
-    }
+        icon: CheckCircle2,
+        className: `
+            bg-green-50
+            border-green-200
+            text-green-700
+        `,
+    },
+
+    cancelled: {
+        label: "Dibatalkan",
+        icon: XCircle,
+        className: `
+            bg-red-50
+            border-red-200
+            text-red-700
+        `,
+    },
 
 };
 
@@ -420,6 +455,13 @@ export default function OrderHistory() {
                                         String(order.status || "")
                                             .toLowerCase()
                                             .trim();
+
+                                    console.log(
+                                        "ORDER STATUS",
+                                        order.id,
+                                        order.status,
+                                        statusKey
+                                    );
 
                                     const status =
                                         statusConfig[statusKey] ||
