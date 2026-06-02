@@ -80,7 +80,7 @@ export default function HeroSlider({
     const slideVariants = {
 
         enter: {
-            opacity: 0.01,
+            opacity: 0.35,
         },
 
         center: {
@@ -367,13 +367,13 @@ export default function HeroSlider({
             {/* SLIDER */}
 
             <AnimatePresence
-                mode="popLayout"
+                mode="wait"
                 initial={false}
             >
 
                 <motion.div
 
-                    key={`slide-${current}-${normalizedBanners[current]}`}
+                    key={`slide-${banner.id || current}`}
 
                     custom={direction}
 
