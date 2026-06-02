@@ -78,13 +78,16 @@ export default function HeroSlider({
         );
 
     const slideVariants = {
-
         enter: {
-            opacity: 0.35,
+            opacity: 0.01,
+            zIndex: 1,
+            transform: "translateZ(0)",   // Safari fix
         },
 
         center: {
             opacity: 1,
+            zIndex: 2,
+            transform: "translateZ(0)",   // Safari fix
             transition: {
                 duration: 1.3,
                 ease: "easeInOut",
@@ -93,6 +96,8 @@ export default function HeroSlider({
 
         exit: {
             opacity: 0.01,
+            zIndex: 1,
+            transform: "translateZ(0)",   // Safari fix
             transition: {
                 duration: 1.3,
                 ease: "easeInOut",
@@ -101,8 +106,8 @@ export default function HeroSlider({
                 display: "none",
             },
         },
-
     };
+
 
     // ========================================
     // IMAGE PRELOAD
