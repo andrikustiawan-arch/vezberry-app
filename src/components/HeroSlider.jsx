@@ -91,7 +91,7 @@ export default function HeroSlider({
             x: 0,
             opacity: 1,
             transition: {
-                duration: 0.65,
+                duration: 0.40,
                 ease: [0.01, 0.25, 0.15, 1],
             },
         },
@@ -100,7 +100,7 @@ export default function HeroSlider({
             x: dir === 1 ? '-90%' : '90%',
             opacity: 1,
             transition: {
-                duration: 1.00,
+                duration: 0.80,
                 ease: [0.25, 0.1, 0.25, 1],
             },
         }),
