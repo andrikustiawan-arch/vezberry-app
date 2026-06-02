@@ -79,7 +79,7 @@ export default function HeroSlider({
 
     const slideVariants = {
         enter: {
-            opacity: 0.01,
+            opacity: 0.001,
             zIndex: 1,
             transform: "translateZ(0)",   // Safari fix
         },
@@ -95,7 +95,7 @@ export default function HeroSlider({
         },
 
         exit: {
-            opacity: 0.01,
+            opacity: 0.001,
             zIndex: 1,
             transform: "translateZ(0)",   // Safari fix
             transition: {
