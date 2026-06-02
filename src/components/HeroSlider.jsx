@@ -80,7 +80,7 @@ export default function HeroSlider({
     const slideVariants = {
         /** @param {number} dir */
         enter: (dir) => ({
-            x: dir === 1 ? 400 : -200,
+            x: dir === 1 ? '100%' : '-100%',
             opacity: 1,
             transition: {
                 duration: 0.35,
@@ -97,10 +97,10 @@ export default function HeroSlider({
         },
         /** @param {number} dir */
         exit: (dir) => ({
-            x: dir === 1 ? -200 : 400,
+            x: dir === 1 ? '-90%' : '90%',
             opacity: 1,
             transition: {
-                duration: 1.05,
+                duration: 1.00,
                 ease: [0.25, 0.1, 0.25, 1],
             },
         }),
