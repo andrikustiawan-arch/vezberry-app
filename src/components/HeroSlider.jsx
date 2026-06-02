@@ -148,7 +148,7 @@ export default function HeroSlider({
 
                 setDirection(1);
                 setCurrent(nextIndex);
-            }, 5000);
+            }, 7000);
 
         return () => {
             if (
