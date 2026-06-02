@@ -93,11 +93,16 @@ export default function HeroSlider({
 
         exit: {
             opacity: 0,
+
             transition: {
                 duration: 1.3,
-                ease: "easeInOut",
+                ease: "easeInOut"
             },
-        },
+
+            transitionEnd: {
+                display: "none"
+            }
+        }
 
     };
 
@@ -365,7 +370,7 @@ export default function HeroSlider({
 
                 <motion.div
 
-                    key={current}
+                    key={`slide-${current}-${normalizedBanners[current]}`}
 
                     custom={direction}
 
@@ -388,13 +393,15 @@ export default function HeroSlider({
                     style={{
                         backgroundColor: '#050816',
 
+                        isolation: 'isolate',
+
                         transform: 'translateZ(0)',
                         WebkitTransform: 'translateZ(0)',
 
                         WebkitBackfaceVisibility: 'hidden',
                         backfaceVisibility: 'hidden',
 
-                        willChange: 'transform, opacity'
+                        willChange: 'opacity'
                     }}
                 >
 
