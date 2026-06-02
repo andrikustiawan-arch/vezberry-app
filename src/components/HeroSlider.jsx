@@ -80,7 +80,7 @@ export default function HeroSlider({
     const slideVariants = {
 
         enter: {
-            opacity: 0,
+            opacity: 0.01,
         },
 
         center: {
@@ -92,17 +92,15 @@ export default function HeroSlider({
         },
 
         exit: {
-            opacity: 0,
-
+            opacity: 0.01,
             transition: {
                 duration: 1.3,
-                ease: "easeInOut"
+                ease: "easeInOut",
             },
-
             transitionEnd: {
-                display: "none"
-            }
-        }
+                display: "none",
+            },
+        },
 
     };
 
@@ -346,20 +344,25 @@ export default function HeroSlider({
 
     return (
 
-        <div className="
-            relative
-            overflow-hidden
+        <div
+            className="
+                relative
+                overflow-hidden
 
-            rounded-3xl
-            md:rounded-[40px]
+                rounded-3xl
+                md:rounded-[40px]
 
-            h-[260px]
-            sm:h-[320px]
-            md:h-[420px]
-            xl:h-[540px]
+                h-[260px]
+                sm:h-[320px]
+                md:h-[420px]
+                xl:h-[540px]
 
-            shadow-[0_20px_60px_rgba(0,0,0,0.18)]
-        ">
+                shadow-[0_20px_60px_rgba(0,0,0,0.18)]
+    "
+            style={{
+                backgroundColor: '#050816'
+            }}
+        >
 
             {/* SLIDER */}
 
@@ -417,7 +420,7 @@ export default function HeroSlider({
 
                         loading="eager"
 
-                        decoding="async"
+                        decoding="sync"
 
                         fetchPriority={
                             current === 0
