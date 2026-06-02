@@ -153,7 +153,7 @@ export default function HeroSlider({
 
                 setDirection(1);
                 setCurrent(nextIndex);
-            }, 9000);
+            }, 5000);
 
         return () => {
             if (
