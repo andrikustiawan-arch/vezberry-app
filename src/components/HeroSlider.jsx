@@ -78,32 +78,27 @@ export default function HeroSlider({
         );
 
     const slideVariants = {
-        /** @param {number} dir */
-        enter: (dir) => ({
-            x: dir === 1 ? '100%' : '-100%',
-            opacity: 1,
-            transition: {
-                duration: 0.35,
-                ease: [0.25, 0.1, 0.25, 1],
-            },
-        }),
+
+        enter: {
+            opacity: 0,
+        },
+
         center: {
-            x: 0,
             opacity: 1,
             transition: {
-                duration: 0.40,
-                ease: [0.01, 0.25, 0.15, 1],
+                duration: 1.3,
+                ease: "easeInOut",
             },
         },
-        /** @param {number} dir */
-        exit: (dir) => ({
-            x: dir === 1 ? '-90%' : '90%',
-            opacity: 1,
+
+        exit: {
+            opacity: 0,
             transition: {
-                duration: 0.80,
-                ease: [0.25, 0.1, 0.25, 1],
+                duration: 1.3,
+                ease: "easeInOut",
             },
-        }),
+        },
+
     };
 
     // ========================================
@@ -364,7 +359,7 @@ export default function HeroSlider({
             {/* SLIDER */}
 
             <AnimatePresence
-                mode="sync"
+                mode="popLayout"
                 initial={false}
             >
 
@@ -392,10 +387,14 @@ export default function HeroSlider({
                 "
                     style={{
                         backgroundColor: '#050816',
+
                         transform: 'translateZ(0)',
                         WebkitTransform: 'translateZ(0)',
+
                         WebkitBackfaceVisibility: 'hidden',
                         backfaceVisibility: 'hidden',
+
+                        willChange: 'transform, opacity'
                     }}
                 >
 
