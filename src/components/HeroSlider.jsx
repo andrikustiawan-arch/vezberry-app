@@ -80,7 +80,7 @@ export default function HeroSlider({
     const slideVariants = {
         /** @param {number} dir */
         enter: (dir) => ({
-            x: dir === 1 ? 300 : -300,
+            x: dir === 1 ? 400 : -200,
             opacity: 1,
             transition: {
                 duration: 0.35,
@@ -97,10 +97,10 @@ export default function HeroSlider({
         },
         /** @param {number} dir */
         exit: (dir) => ({
-            x: dir === 1 ? -300 : 300,
+            x: dir === 1 ? -200 : 400,
             opacity: 1,
             transition: {
-                duration: 0.95,
+                duration: 1.05,
                 ease: [0.25, 0.1, 0.25, 1],
             },
         }),
@@ -364,7 +364,7 @@ export default function HeroSlider({
             {/* SLIDER */}
 
             <AnimatePresence
-                mode="wait"
+                mode="sync"
                 initial={false}
             >
 
