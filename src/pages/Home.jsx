@@ -576,7 +576,7 @@ export default function Home() {
 
         settings.whatsapp_link ||
 
-        "https://wa.me/+6282120012025";
+        `https://wa.me/${settings.whatsapp}`;
 
     const igLink =
 

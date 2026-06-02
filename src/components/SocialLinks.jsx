@@ -3,7 +3,9 @@ import { motion } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 
 export default function SocialLinks({ waLink, instagramLink }) {
-    const wa = waLink || 'https://wa.me/6281234567890';
+    const wa =
+        waLink ||
+        '#';
     const ig = instagramLink || 'https://instagram.com/vezberry';
 
     return (
