@@ -199,31 +199,21 @@ app.post("/api/products", (req, res) => {
             JSON.parse(data);
 
         const newProduct = {
+            id: req.body.id || Date.now().toString(),
 
-            id:
-                req.body.id ||
-                Date.now().toString(),
+            ...req.body,
 
-            name: req.body.name || "",
-            category: req.body.category || "",
             price: Number(req.body.price) || 0,
             stock: Number(req.body.stock) || 0,
-            description: req.body.description || "",
 
-            image:
-                req.body.image || "",
+            ready_after_days:
+                Number(req.body.ready_after_days || 0),
 
-            imageUrl:
-                req.body.imageUrl ||
-                req.body.image_url ||
-                req.body.image ||
-                "",
+            daily_capacity:
+                Number(req.body.daily_capacity || 0),
 
-            image_url:
-                req.body.image_url ||
-                req.body.imageUrl ||
-                req.body.image ||
-                "",
+            discount_percentage:
+                Number(req.body.discount_percentage || 0),
 
             createdAt:
                 new Date().toISOString(),
@@ -232,7 +222,6 @@ app.post("/api/products", (req, res) => {
             sales_weekly: 0,
             sales_monthly: 0,
             sales_yearly: 0,
-
         };
 
         products.unshift(newProduct);
@@ -653,61 +642,9 @@ app.delete("/api/orders/:id", (req, res) => {
 // SETTINGS
 // =========================
 
+// SAVE SETTINGS
+
 app.get("/api/settings", (req, res) => {
-
-
-    // SAVE SETTINGS
-
-    app.put("/api/settings", (req, res) => {
-
-        try {
-
-            console.log(
-                "SAVE SETTINGS:",
-                req.body
-            );
-
-            fs.writeFileSync(
-
-                settingsFile,
-
-                JSON.stringify(
-                    req.body,
-                    null,
-                    2
-                )
-
-            );
-
-            return res.json({
-
-                success: true,
-
-                settings: req.body,
-
-            });
-
-        } catch (err) {
-
-            console.error(
-                "SAVE SETTINGS ERROR:",
-                err
-            );
-
-            return res.status(500).json({
-
-                success: false,
-
-                error: "Failed save settings",
-
-            });
-
-        }
-
-    });
-
-
-
 
     try {
 
@@ -723,6 +660,56 @@ app.get("/api/settings", (req, res) => {
         return res.status(500).json({
             success: false,
             error: "Failed get settings",
+        });
+
+    }
+
+});
+
+
+
+app.put("/api/settings", (req, res) => {
+
+    try {
+
+        console.log(
+            "SAVE SETTINGS:",
+            req.body
+        );
+
+        fs.writeFileSync(
+
+            settingsFile,
+
+            JSON.stringify(
+                req.body,
+                null,
+                2
+            )
+
+        );
+
+        return res.json({
+
+            success: true,
+
+            settings: req.body,
+
+        });
+
+    } catch (err) {
+
+        console.error(
+            "SAVE SETTINGS ERROR:",
+            err
+        );
+
+        return res.status(500).json({
+
+            success: false,
+
+            error: "Failed save settings",
+
         });
 
     }
