@@ -303,6 +303,99 @@ app.put("/api/products/bulk", (req, res) => {
 
 });
 
+// =========================
+// UPDATE PRODUCT
+// =========================
+
+app.put("/api/products/:id", (req, res) => {
+
+    try {
+
+        const productId =
+            req.params.id;
+
+        const products =
+            JSON.parse(
+                fs.readFileSync(
+                    productsFile,
+                    "utf8"
+                )
+            );
+
+        const index =
+            products.findIndex(
+                product =>
+                    product.id === productId
+            );
+
+        if (index === -1) {
+
+            return res.status(404).json({
+                success: false,
+                error: "Product not found",
+            });
+
+        }
+
+        products[index] = {
+
+            ...products[index],
+
+            ...req.body,
+
+            price:
+                Number(req.body.price) || 0,
+
+            stock:
+                Number(req.body.stock) || 0,
+
+            updatedAt:
+                new Date().toISOString(),
+
+        };
+
+        fs.writeFileSync(
+
+            productsFile,
+
+            JSON.stringify(
+                products,
+                null,
+                2
+            )
+
+        );
+
+        return res.json({
+
+            success: true,
+
+            product:
+                products[index],
+
+        });
+
+    } catch (err) {
+
+        console.error(
+            "UPDATE PRODUCT ERROR:",
+            err
+        );
+
+        return res.status(500).json({
+
+            success: false,
+
+            error:
+                "Failed update product",
+
+        });
+
+    }
+
+});
+
+
 // DELETE PRODUCT
 
 app.delete("/api/products/:id", (req, res) => {
