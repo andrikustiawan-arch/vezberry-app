@@ -942,14 +942,6 @@ export default function OrdersPage() {
             y += 5;
 
             doc.text(
-                `Workflow: ${getLatestWorkflowStatusLabel(order)}`,
-                4,
-                y
-            );
-
-            y += 5;
-
-            doc.text(
                 `Customer: ${order.customer_name || "-"}`,
                 4,
                 y
@@ -1089,12 +1081,12 @@ export default function OrdersPage() {
             y += 8;
 
             doc.text(
-                `Catatan: ${order.notes || "-"}`,
+                notesLines,
                 4,
                 y
             );
 
-            y += 12;
+            y += notesLines.length * 4;
 
             doc.text(
                 "Terima kasih",
