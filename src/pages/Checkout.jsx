@@ -773,7 +773,7 @@ export default function Checkout() {
                                         text-slate-700
                                         mb-2
                                     ">
-                                        Nama Lengkap
+                                        Nama Lengkap *(wajib isi)
                                     </label>
 
                                     <input
@@ -825,22 +825,25 @@ export default function Checkout() {
                                         text-slate-700
                                         mb-2
                                     ">
-                                        Nomor WhatsApp
+                                        Nomor WhatsApp *(wajib isi)
                                     </label>
 
                                     <div className="
                                         relative
                                     ">
 
-                                        <Phone className="
-                                            absolute
-                                            left-4
-                                            top-1/2
-                                            -translate-y-1/2
-                                            w-5
-                                            h-5
-                                            text-slate-400
-                                        " />
+                                        <Phone
+                                            className="
+        absolute
+        left-5
+        top-1/2
+        -translate-y-1/2
+        w-4
+        h-4
+        text-slate-400
+        pointer-events-none
+    "
+                                        />
 
                                         <input
                                             type="tel"
@@ -861,11 +864,11 @@ export default function Checkout() {
                                             placeholder="08xxxxxxxxxx"
                                             className="
                                                 w-full
-                                                h-12
+                                                h-14
                                                 md:h-14
                                                 px-4
                                                 md:px-5
-                                                pl-12
+                                                pl-14
                                                 rounded-xl
                                                 md:rounded-2xl
                                                 border
@@ -894,21 +897,24 @@ export default function Checkout() {
                                         text-slate-700
                                         mb-2
                                     ">
-                                        Alamat Pengiriman
+                                        Alamat Pengiriman *(wajib isi bila via OjOL)
                                     </label>
 
                                     <div className="
                                         relative
                                     ">
 
-                                        <MapPin className="
-                                            absolute
-                                            left-4
-                                            top-4
-                                            w-5
-                                            h-5
-                                            text-slate-400
-                                        " />
+                                        <MapPin
+                                            className="
+        absolute
+        left-5
+        top-4
+        w-4
+        h-4
+        text-slate-400
+        pointer-events-none
+    "
+                                        />
 
                                         <textarea
                                             value={
@@ -932,7 +938,7 @@ export default function Checkout() {
                                                 md:h-24
                                                 px-4
                                                 md:px-5
-                                                pl-12
+                                                pl-14
                                                 py-3
                                                 md:py-4
                                                 rounded-xl
@@ -971,14 +977,17 @@ export default function Checkout() {
                                         relative
                                     ">
 
-                                        <FileText className="
-                                            absolute
-                                            left-4
-                                            top-4
-                                            w-5
-                                            h-5
-                                            text-slate-400
-                                        " />
+                                        <FileText
+                                            className="
+        absolute
+        left-5
+        top-4
+        w-4
+        h-4
+        text-slate-400
+        pointer-events-none
+    "
+                                        />
 
                                         <textarea
                                             value={

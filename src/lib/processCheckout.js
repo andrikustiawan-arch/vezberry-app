@@ -43,7 +43,7 @@ export const processCheckout = async ({
 
         paymentMethod === "cash"
 
-            ? "Cash di Booth"
+            ? "Cash di Toko/Booth"
 
             : "Transfer / QRIS";
 
