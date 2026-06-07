@@ -18,6 +18,10 @@ import {
 } from "@/lib/processCheckout";
 
 import {
+    formatPreorderDate,
+} from "@/utils/preorderUtils";
+
+import {
     ChevronLeft,
     ShoppingBag,
     User,
@@ -108,6 +112,12 @@ export default function Checkout() {
         0
     );
 
+    const hasPreorder =
+        effectiveCart.some(
+            item =>
+                item.is_preorder
+        );
+
     const [
         customerNotes,
         setCustomerNotes,
@@ -191,11 +201,33 @@ export default function Checkout() {
         }
 
         // build whatsapp message & url and open a blank tab synchronously
-        const itemLines = effectiveCart.map((item, index) => {
-            return `${index + 1}. ${item.name || item.product_name} • Qty: ${item.quantity} • Subtotal: Rp${(
-                item.price * item.quantity
-            ).toLocaleString("id-ID")}`;
-        });
+        const itemLines =
+            effectiveCart.flatMap(
+                (item, index) => {
+
+                    const lines = [
+
+                        `${index + 1}. ${item.name || item.product_name} • Qty: ${item.quantity} • Subtotal: Rp${(
+                            item.price *
+                            item.quantity
+                        ).toLocaleString("id-ID")}`
+
+                    ];
+
+                    if (
+                        item.is_preorder
+                    ) {
+
+                        lines.push(
+                            `⚠️ PREORDER (Produk siap ${formatPreorderDate(item)})`
+                        );
+
+                    }
+
+                    return lines;
+
+                }
+            );
 
         const messageLines = [
             "Assalamu'alaikum VEZBERRY 🍓",
@@ -516,6 +548,38 @@ export default function Checkout() {
 
                             </div>
 
+                            {
+                                hasPreorder && (
+
+                                    <div className="
+            mb-4
+            rounded-xl
+            border
+            border-amber-300
+            bg-amber-50
+            p-4
+        ">
+
+                                        <div className="
+                font-bold
+                text-amber-900
+            ">
+                                            ⚠️ Pesanan Mengandung Produk Preorder
+                                        </div>
+
+                                        <div className="
+                text-sm
+                text-amber-700
+                mt-1
+            ">
+                                            Produk preorder membutuhkan waktu produksi sesuai estimasi tanggal siap.
+                                        </div>
+
+                                    </div>
+
+                                )
+                            }
+
                             <div className="
                                 space-y-3
                                 md:space-y-4
@@ -564,6 +628,34 @@ export default function Checkout() {
                                                                 .product_name
                                                         }
                                                     </h3>
+
+                                                    {
+                                                        item.is_preorder && (
+                                                            <div className="
+            mt-2
+            rounded-lg
+            border
+            border-amber-200
+            bg-amber-50
+            px-3
+            py-2
+            text-xs
+            text-amber-800
+        ">
+                                                                <div className="font-bold">
+                                                                    ⚠️ PREORDER
+                                                                </div>
+
+                                                                <div>
+                                                                    Produk siap:
+                                                                </div>
+
+                                                                <div className="font-semibold">
+                                                                    {formatPreorderDate(item)}
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    }
 
                                                     <p className="
                                                         text-xs
