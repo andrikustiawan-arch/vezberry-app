@@ -200,6 +200,11 @@ export default function Checkout() {
 
         }
 
+        console.log(
+            "CHECKOUT CART FULL:",
+            JSON.stringify(cart, null, 2)
+        );
+
         // build whatsapp message & url and open a blank tab synchronously
         const itemLines =
             effectiveCart.flatMap(
@@ -228,6 +233,11 @@ export default function Checkout() {
 
                 }
             );
+
+        console.log(
+            "CHECKOUT ITEMS:",
+            cart
+        );
 
         const messageLines = [
             "Assalamu'alaikum VEZBERRY 🍓",
