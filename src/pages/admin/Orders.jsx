@@ -73,6 +73,10 @@ import {
     getOrderTotal,
 } from "@/utils";
 
+import {
+    formatPreorderDate,
+} from "@/utils/preorderUtils";
+
 // ========================================
 // STATUS
 // ========================================
@@ -173,7 +177,21 @@ const sendOrderReceiptToCustomer = (order) => {
 
     const itemsText = (order.items || [])
         .map((item, index) =>
-            `${index + 1}. ${item.product_name || item.name || "-"}\n   Qty: ${item.quantity}\n   Harga: Rp ${Number(item.price || 0).toLocaleString("id-ID")}\n   Subtotal: Rp ${((Number(item.price) || 0) * (Number(item.quantity) || 0)).toLocaleString("id-ID")}`
+            `${index + 1}. ${item.product_name || item.name || "-"}
+   Qty: ${item.quantity}
+   Harga: Rp ${Number(item.price || 0).toLocaleString("id-ID")}
+   Subtotal: Rp ${(
+                (Number(item.price) || 0) *
+                (Number(item.quantity) || 0)
+            ).toLocaleString("id-ID")}
+${item.is_preorder
+                ? `
+
+⚠️ PREORDER
+📅 Produk siap:
+${formatPreorderDate(item)}`
+                : ""
+            }`
         )
         .join("\n\n");
 
@@ -970,7 +988,37 @@ export default function OrdersPage() {
                     }
                 );
 
-                y += 7;
+                y += 5;
+
+                // =====================
+                // PREORDER INFO
+                // =====================
+
+                if (item.is_preorder) {
+
+                    doc.setFontSize(7);
+
+                    doc.text(
+                        "PREORDER",
+                        6,
+                        y
+                    );
+
+                    y += 4;
+
+                    doc.text(
+                        `Siap: ${formatPreorderDate(item)}`,
+                        6,
+                        y
+                    );
+
+                    y += 5;
+
+                } else {
+
+                    y += 2;
+
+                }
 
             });
 
@@ -1163,6 +1211,8 @@ ${item.product_name || item.name}
 Qty: ${item.quantity}
 Harga: Rp ${Number(item.price || 0).toLocaleString("id-ID")}
 Subtotal: Rp ${(Number(item.price || 0) * Number(item.quantity || 0)).toLocaleString("id-ID")}
+${item.is_preorder ? `PREORDER
+Produk siap: ${formatPreorderDate(item)}` : ""}
 
 `)
                 .join("\n")}

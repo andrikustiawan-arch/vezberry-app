@@ -25,9 +25,6 @@ import {
     ChevronLeft,
     ShoppingBag,
     User,
-    Phone,
-    MapPin,
-    FileText,
     CreditCard,
     Package,
 } from "lucide-react";
@@ -832,18 +829,7 @@ export default function Checkout() {
                                         relative
                                     ">
 
-                                        <Phone
-                                            className="
-        absolute
-        left-5
-        top-1/2
-        -translate-y-1/2
-        w-4
-        h-4
-        text-slate-400
-        pointer-events-none
-    "
-                                        />
+
 
                                         <input
                                             type="tel"
@@ -868,7 +854,7 @@ export default function Checkout() {
                                                 md:h-14
                                                 px-4
                                                 md:px-5
-                                                pl-14
+                                                pl-4
                                                 rounded-xl
                                                 md:rounded-2xl
                                                 border
@@ -904,17 +890,7 @@ export default function Checkout() {
                                         relative
                                     ">
 
-                                        <MapPin
-                                            className="
-        absolute
-        left-5
-        top-4
-        w-4
-        h-4
-        text-slate-400
-        pointer-events-none
-    "
-                                        />
+
 
                                         <textarea
                                             value={
@@ -938,7 +914,7 @@ export default function Checkout() {
                                                 md:h-24
                                                 px-4
                                                 md:px-5
-                                                pl-14
+                                                pl-4
                                                 py-3
                                                 md:py-4
                                                 rounded-xl
@@ -977,17 +953,7 @@ export default function Checkout() {
                                         relative
                                     ">
 
-                                        <FileText
-                                            className="
-        absolute
-        left-5
-        top-4
-        w-4
-        h-4
-        text-slate-400
-        pointer-events-none
-    "
-                                        />
+
 
                                         <textarea
                                             value={
@@ -1011,7 +977,7 @@ export default function Checkout() {
                                                 md:h-24
                                                 px-4
                                                 md:px-5
-                                                pl-12
+                                                pl-4
                                                 py-3
                                                 md:py-4
                                                 rounded-xl
