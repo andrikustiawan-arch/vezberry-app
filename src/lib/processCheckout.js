@@ -9,6 +9,10 @@ import {
     createOrderIdFromPhone,
 } from "@/utils";
 
+import {
+    formatPreorderDate,
+} from "@/utils/preorderUtils";
+
 export const processCheckout = async ({
 
     orderData,
@@ -174,12 +178,21 @@ export const processCheckout = async ({
                 index
             ) => {
 
+                const preorderInfo =
+                    item.is_preorder
+                        ? `
+
+⚠️ PREORDER
+📅 Produk siap:
+${formatPreorderDate(item)}`
+                        : "";
+
                 return `${index + 1}. ${item.name || item.product_name}
 • Qty: ${item.quantity}
 • Subtotal: Rp${(
                         item.price *
                         item.quantity
-                    ).toLocaleString("id-ID")}`;
+                    ).toLocaleString("id-ID")}${preorderInfo}`;
 
             }
         );
