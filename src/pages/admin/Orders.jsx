@@ -1078,7 +1078,13 @@ export default function OrdersPage() {
 
             y += addressLines.length * 4;
 
-            y += 8;
+            y += 4;
+
+            const notesLines =
+                doc.splitTextToSize(
+                    `Catatan: ${order.notes || "-"}`,
+                    50
+                );
 
             doc.text(
                 notesLines,
@@ -1087,6 +1093,8 @@ export default function OrdersPage() {
             );
 
             y += notesLines.length * 4;
+
+            y += 8;
 
             doc.text(
                 "Terima kasih",
