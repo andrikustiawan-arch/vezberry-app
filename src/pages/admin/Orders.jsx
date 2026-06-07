@@ -121,6 +121,16 @@ const statuses = [
 
 ];
 
+const getStatusLabel = (status) => {
+
+    const found = statuses.find(
+        s => s.value === status
+    );
+
+    return found?.label || status || "-";
+
+};
+
 const workflowStages = [
     {
         key: "responded",
@@ -498,12 +508,19 @@ export default function OrdersPage() {
     const normalizeOrder = useCallback((order) => ({
         ...order,
         workflow: {
+
             responded:
                 order.workflow?.responded ??
                 false,
+
             paid:
                 order.workflow?.paid ??
                 false,
+
+            ready:
+                order.workflow?.ready ??
+                false,
+
             pickedUp:
                 order.workflow?.pickedUp ??
                 false,
@@ -917,7 +934,15 @@ export default function OrdersPage() {
             y += 5;
 
             doc.text(
-                `Status: ${getLatestWorkflowStatusLabel(order)}`,
+                `Status Pesanan: ${getStatusLabel(order.status)}`,
+                4,
+                y
+            );
+
+            y += 5;
+
+            doc.text(
+                `Workflow: ${getLatestWorkflowStatusLabel(order)}`,
                 4,
                 y
             );
@@ -1047,11 +1072,19 @@ export default function OrdersPage() {
 
             doc.setFontSize(8);
 
+            const addressLines =
+                doc.splitTextToSize(
+                    `Alamat: ${order.customer_address || "-"}`,
+                    50
+                );
+
             doc.text(
-                `Alamat: ${order.customer_address || "-"}`,
+                addressLines,
                 4,
                 y
             );
+
+            y += addressLines.length * 4;
 
             y += 8;
 
