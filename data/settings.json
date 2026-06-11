@@ -63,5 +63,7 @@
     }
   ],
   "is_open": true,
-  "qris_image_url": ""
+  "qris_image_url": "",
+  "maintenance_mode": false,
+  "maintenance_message": "Website sedang diperbarui. Silakan kembali beberapa saat lagi."
 }

@@ -204,7 +204,10 @@ const defaultForm = {
 
     qris_image_url:
         "",
+    maintenance_mode: false,
 
+    maintenance_message:
+        "Website sedang diperbarui. Silakan kembali beberapa saat lagi.",
 };
 
 // ========================================
@@ -1873,6 +1876,57 @@ export default function StoreSettingsPage() {
                             </div>
 
                         </div>
+
+                    </CardContent>
+
+                </Card>
+
+                <Card>
+
+                    <CardHeader>
+
+                        <CardTitle>
+                            Maintenance Mode
+                        </CardTitle>
+
+                    </CardHeader>
+
+                    <CardContent>
+
+                        <div className="flex items-center justify-between">
+
+                            <div>
+
+                                <div className="font-bold">
+                                    Aktifkan Maintenance
+                                </div>
+
+                                <div className="text-sm text-slate-500">
+                                    Customer akan melihat halaman Under Construction
+                                </div>
+
+                            </div>
+
+                            <Switch
+                                checked={form.maintenance_mode}
+                                onCheckedChange={(value) =>
+                                    set("maintenance_mode", value)
+                                }
+                            />
+
+                        </div>
+
+                        <Textarea
+                            className="mt-4"
+                            rows={4}
+                            value={form.maintenance_message}
+                            onChange={(e) =>
+                                set(
+                                    "maintenance_message",
+                                    e.target.value
+                                )
+                            }
+                        />
 
                     </CardContent>
 
