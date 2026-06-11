@@ -197,68 +197,7 @@ export default function Home() {
         [settings]
     );
 
-    if (
-        settings?.maintenance_mode &&
-        !location.pathname.startsWith(
-            "/admin"
-        )
-    ) {
 
-        return (
-
-            <div className="
-            min-h-screen
-            flex
-            items-center
-            justify-center
-            bg-[#f8f6f3]
-            px-6
-        ">
-
-                <div className="
-                max-w-xl
-                text-center
-            ">
-
-                    <h1 className="
-                    text-5xl
-                    font-black
-                    text-pink-600
-                ">
-                        VEZBERRY
-                    </h1>
-
-                    <div className="
-                    text-7xl
-                    mt-6
-                ">
-                        🛠️
-                    </div>
-
-                    <h2 className="
-                    text-3xl
-                    font-black
-                    mt-5
-                ">
-                        Website Sedang Diperbarui
-                    </h2>
-
-                    <p className="
-                    mt-4
-                    text-slate-600
-                ">
-                        {
-                            settings.maintenance_message
-                        }
-                    </p>
-
-                </div>
-
-            </div>
-
-        );
-
-    }
 
     const [
         paymentMethod,
@@ -676,6 +615,66 @@ export default function Home() {
 
         "https://instagram.com/vezberry";
 
+    if (
+        settings?.maintenance_mode &&
+        !location.pathname.startsWith(
+            "/admin"
+        )
+    ) {
+
+        return (
+
+            <div className="
+            min-h-screen
+            flex
+            items-center
+            justify-center
+            bg-[#f8f6f3]
+            px-6
+        ">
+
+                <div className="
+                max-w-xl
+                text-center
+            ">
+
+                    <h1 className="
+                    text-5xl
+                    font-black
+                    text-pink-600
+                ">
+                        VEZBERRY
+                    </h1>
+
+                    <div className="
+                    text-7xl
+                    mt-6
+                ">
+                        🛠️
+                    </div>
+
+                    <h2 className="
+                    text-3xl
+                    font-black
+                    mt-5
+                ">
+                        Website Sedang Diperbarui
+                    </h2>
+
+                    <p className="
+                    mt-4
+                    text-slate-600
+                ">
+                        {settings.maintenance_message}
+                    </p>
+
+                </div>
+
+            </div>
+
+        );
+
+    }
 
     // ========================================
     // ADMIN SECRET TAP
