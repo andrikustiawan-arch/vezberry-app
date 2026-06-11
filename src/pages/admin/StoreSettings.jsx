@@ -143,6 +143,9 @@ const defaultForm = {
     banner_images:
         [],
 
+    default_category:
+        "sweet_fluffy_bread",
+
     operational_hours: [
 
         {
@@ -668,6 +671,53 @@ export default function StoreSettingsPage() {
                                     rounded-2xl
                                 "
                             />
+
+                        </Field>
+
+                        <Field label="Kategori Awal Homepage">
+
+                            <select
+                                value={form.default_category}
+                                onChange={(e) =>
+                                    set(
+                                        "default_category",
+                                        e.target.value
+                                    )
+                                }
+                                className="
+            h-14
+            rounded-2xl
+            border
+            px-4
+            w-full
+        "
+                            >
+
+                                <option value="pizza">
+                                    Pizza
+                                </option>
+
+                                <option value="sweet_fluffy_bread">
+                                    Fluffy Bread
+                                </option>
+
+                                <option value="naturally_bread">
+                                    Natural Bread
+                                </option>
+
+                                <option value="kitchen_snack">
+                                    Kitchen Snack
+                                </option>
+
+                                <option value="fingery_snack">
+                                    Fingery Snack
+                                </option>
+
+                                <option value="authentic_drink">
+                                    Authentic Drink
+                                </option>
+
+                            </select>
 
                         </Field>
 

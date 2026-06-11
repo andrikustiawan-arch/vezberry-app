@@ -140,7 +140,9 @@ export default function Home() {
     const [
         activeCategory,
         setActiveCategory
-    ] = useState('pizza');
+    ] = useState(
+        "sweet_fluffy_bread"
+    );
 
     const [
         cart,
@@ -253,6 +255,22 @@ export default function Home() {
 
                 setSettings(savedSettings);
 
+                if (
+                    savedSettings?.default_category
+                ) {
+
+                    setActiveCategory(
+                        savedSettings.default_category
+                    );
+
+                } else {
+
+                    setActiveCategory(
+                        "sweet_fluffy_bread"
+                    );
+
+                }
+
                 // CONVERT BANNERS
                 const convertedSlides =
                     Array.isArray(savedSettings?.banner_images)
@@ -287,24 +305,36 @@ export default function Home() {
     const filteredProducts =
         useMemo(() => {
 
-            return dbProducts.filter(
+            return dbProducts
 
-                (item) =>
+                .filter(
+                    item =>
+                        item.category === activeCategory &&
+                        !item.is_hidden
+                )
 
-                    item.category ===
-                    activeCategory
+                .sort((a, b) => {
 
-                    &&
+                    // aktif dulu
 
-                    !item.is_hidden
+                    if (
+                        a.is_coming_soon !==
+                        b.is_coming_soon
+                    ) {
 
-            );
+                        return a.is_coming_soon
+                            ? 1
+                            : -1;
+
+                    }
+
+                    return 0;
+
+                });
 
         }, [
-
             dbProducts,
             activeCategory,
-
         ]);
 
     // ========================================

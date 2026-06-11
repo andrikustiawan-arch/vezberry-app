@@ -99,6 +99,7 @@ const CATEGORIES = [
 const defaultForm = {
     name: "",
     category: "pizza",
+    display_order: 0,
     price: "",
     description: "",
     stock: "",
@@ -242,6 +243,9 @@ export default function ProductFormModal({
                 ...defaultForm,
 
                 ...product,
+
+                display_order:
+                    product.display_order || 0,
 
                 price:
                     product.price || "",
@@ -401,6 +405,11 @@ export default function ProductFormModal({
                 const data = {
 
                     ...form,
+
+                    display_order:
+                        Number(
+                            form.display_order || 0
+                        ),
 
                     id:
                         product?.id ||
@@ -1001,6 +1010,56 @@ setForm((f) => ({
                                             </SelectContent>
 
                                         </Select>
+
+                                    </div>
+
+                                    {/* DISPLAY ORDER */}
+
+                                    <div>
+
+                                        <Label>
+                                            Urutan Tampil Produk
+                                        </Label>
+
+                                        <Input
+
+                                            type="number"
+
+                                            value={
+                                                form.display_order || 0
+                                            }
+
+                                            onChange={(e) =>
+
+                                                setForm((f) => ({
+                                                    ...f,
+                                                    display_order:
+                                                        Number(e.target.value)
+                                                }))
+
+                                            }
+
+                                            placeholder="0"
+
+                                            className="
+                                                mt-2
+                                                h-12
+                                                sm:h-14
+                                                rounded-2xl
+                                                bg-white/80
+                                            "
+                                        />
+
+                                        <p className="
+                                            mt-2
+                                            text-xs
+                                            text-slate-500
+                                        ">
+
+                                            Semakin kecil angka,
+                                            semakin atas tampilnya.
+
+                                        </p>
 
                                     </div>
 
