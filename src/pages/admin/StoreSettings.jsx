@@ -614,6 +614,84 @@ export default function StoreSettingsPage() {
                     </div>
 
                 </div>
+
+                {/* MAINTENANCE MODE */}
+
+                <Card className="
+    rounded-[32px]
+    border-0
+    shadow-xl
+">
+
+                    <CardHeader>
+
+                        <CardTitle className="
+            flex
+            items-center
+            gap-3
+            text-2xl
+            font-black
+        ">
+                            🛠️ Maintenance Mode
+                        </CardTitle>
+
+                    </CardHeader>
+
+                    <CardContent className="space-y-6">
+
+                        <div className="
+            flex
+            items-center
+            justify-between
+        ">
+
+                            <div>
+
+                                <div className="font-bold">
+                                    Aktifkan Maintenance
+                                </div>
+
+                                <div className="
+                    text-sm
+                    text-slate-500
+                ">
+                                    Customer akan melihat halaman Under Construction
+                                </div>
+
+                            </div>
+
+                            <Switch
+                                checked={form.maintenance_mode}
+                                onCheckedChange={(value) =>
+                                    set("maintenance_mode", value)
+                                }
+                            />
+
+                        </div>
+
+                        <div>
+
+                            <Label>
+                                Pesan Maintenance
+                            </Label>
+
+                            <Textarea
+                                rows={4}
+                                value={form.maintenance_message}
+                                onChange={(e) =>
+                                    set(
+                                        "maintenance_message",
+                                        e.target.value
+                                    )
+                                }
+                            />
+
+                        </div>
+
+                    </CardContent>
+
+                </Card>
+
                 {/* STORE INFO */}
 
                 <Card className="
@@ -1785,82 +1863,7 @@ export default function StoreSettingsPage() {
                 </Card>
 
 
-                {/* MAINTENANCE MODE */}
 
-                <Card className="
-    rounded-[32px]
-    border-0
-    shadow-xl
-">
-
-                    <CardHeader>
-
-                        <CardTitle className="
-            flex
-            items-center
-            gap-3
-            text-2xl
-            font-black
-        ">
-                            🛠️ Maintenance Mode
-                        </CardTitle>
-
-                    </CardHeader>
-
-                    <CardContent className="space-y-6">
-
-                        <div className="
-            flex
-            items-center
-            justify-between
-        ">
-
-                            <div>
-
-                                <div className="font-bold">
-                                    Aktifkan Maintenance
-                                </div>
-
-                                <div className="
-                    text-sm
-                    text-slate-500
-                ">
-                                    Customer akan melihat halaman Under Construction
-                                </div>
-
-                            </div>
-
-                            <Switch
-                                checked={form.maintenance_mode}
-                                onCheckedChange={(value) =>
-                                    set("maintenance_mode", value)
-                                }
-                            />
-
-                        </div>
-
-                        <div>
-
-                            <Label>
-                                Pesan Maintenance
-                            </Label>
-
-                            <Textarea
-                                rows={4}
-                                value={form.maintenance_message}
-                                onChange={(e) =>
-                                    set(
-                                        "maintenance_message",
-                                        e.target.value
-                                    )
-                                }
-                            />
-
-                        </div>
-
-                    </CardContent>
-
-                </Card>
 
                 {/* QRIS */}
 
@@ -1959,56 +1962,6 @@ export default function StoreSettingsPage() {
 
                 </Card>
 
-                <Card>
-
-                    <CardHeader>
-
-                        <CardTitle>
-                            Maintenance Mode
-                        </CardTitle>
-
-                    </CardHeader>
-
-                    <CardContent>
-
-                        <div className="flex items-center justify-between">
-
-                            <div>
-
-                                <div className="font-bold">
-                                    Aktifkan Maintenance
-                                </div>
-
-                                <div className="text-sm text-slate-500">
-                                    Customer akan melihat halaman Under Construction
-                                </div>
-
-                            </div>
-
-                            <Switch
-                                checked={form.maintenance_mode}
-                                onCheckedChange={(value) =>
-                                    set("maintenance_mode", value)
-                                }
-                            />
-
-                        </div>
-
-                        <Textarea
-                            className="mt-4"
-                            rows={4}
-                            value={form.maintenance_message}
-                            onChange={(e) =>
-                                set(
-                                    "maintenance_message",
-                                    e.target.value
-                                )
-                            }
-                        />
-
-                    </CardContent>
-
-                </Card>
 
                 {/* SAVE */}
 
